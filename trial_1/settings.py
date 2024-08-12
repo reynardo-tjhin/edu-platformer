@@ -32,11 +32,11 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'django.contrib.admin',
-    'django.contrib.auth',
+    'django.contrib.auth',          # authenticate users
     'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
+    # 'django.contrib.sessions',    # not use this anymore
+    'django.contrib.messages',      # display notification to user
+    'django.contrib.staticfiles',   # images, css files and so on...
 ]
 
 MIDDLEWARE = [
