@@ -18,6 +18,8 @@ const backgroundLevel1 = new Spirte({
 
 const player = new Player({
     collisionBlocks,
+    imageSrc: './Assets/img/king/idle.png',
+    frameRate: 11,
 });
 
 const keys = {

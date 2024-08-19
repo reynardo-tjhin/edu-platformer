@@ -1,7 +1,6 @@
-class Player extends Sprite{
-    constructor({
-        collisionBlocks = []
-    }) {
+class Player extends Spirte{
+    constructor({ collisionBlocks = [], imageSrc, frameRate }) {
+        super({ imageSrc, frameRate })
         this.position = {
             x: 200,
             y: 200,
@@ -12,8 +11,6 @@ class Player extends Sprite{
             y: 0,
         }
 
-        this.width = 25;
-        this.height = 25;
         this.sides = {
             bottom: this.position.y + this.height
         }
@@ -24,6 +21,8 @@ class Player extends Sprite{
     }    
 
     update() {
+        // c.fillStyle = 'rgba(0, 0, 255, 0.3)';
+        // c.fillRect(this.position.x, this.position.y, this.width, this.height);
         this.position.x += this.velocity.x;
         
         this.checkHorizontalCollision();
