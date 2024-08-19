@@ -72,6 +72,8 @@ TEMPLATES = [
 WSGI_APPLICATION = 'trial_1.wsgi.application'
 
 
+AUTH_USER_MODEL = 'player.Player'
+
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 

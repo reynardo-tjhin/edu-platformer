@@ -147,17 +147,19 @@
     </div>
 
     <main class="form-signin w-100 m-auto">
-        <form>
+        {% if error_message %}<p style="color: red;"><strong>Error: {{ error_message }}</strong></p>{% endif %}
+
+        <form action="{% url 'player:check-account' %}" method="post">
             {% csrf_token %}
             <img class="mb-4" src="../assets/brand/bootstrap-logo.svg" alt="" width="72" height="57">
             <h1 class="h3 mb-3 fw-normal">Please sign in</h1>
         
             <div class="form-floating">
-                <input type="name" class="form-control" id="floatingInput" placeholder="Name">
+                <input type="name" name="name" class="form-control" id="floatingInput" placeholder="Name">
                 <label for="floatingInput">Name</label>
             </div>
             <div class="form-floating">
-                <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password">
                 <label for="floatingPassword">Password</label>
             </div>
         

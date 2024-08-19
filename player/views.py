@@ -1,7 +1,3 @@
-import hashlib
-import hmac
-import uuid
-
 from django.shortcuts import render
 from django.urls import reverse
 from django.http import (
@@ -9,6 +5,7 @@ from django.http import (
     HttpRequest,
     HttpResponseRedirect,
 )
+from django.contrib.auth import authenticate, login, logout
 from .models import Player
 
 # Create your views here.
@@ -16,32 +13,87 @@ def home(request: HttpRequest) -> HttpResponse:
     """
     The homepage of the game.
     """
-    context = {}
-    return render(request, "player/home.html", context)
+    # user already logged in
+    if (request.user.is_authenticated):
+        return render(request, "player/dashboard.html", {})
+    
+    # user has not logged in
+    return render(request, "player/home.html", {})
 
-def login(request: HttpRequest) -> HttpResponse:
+def login_pageview(request: HttpRequest) -> HttpResponse:
     """
     Player logging in.
     """
-    context = {}
-    return render(request, "player/login.html", context)
+    # user already logged in
+    if (request.user.is_authenticated):
+        return render(request, "player/dashboard.html", {})
+    
+    # user has not logged in
+    return render(request, "player/login.html", {})
 
 def create_account_pageview(request: HttpRequest) -> HttpResponse:
     """
     Load the create account page.
     """
-    context = {}
-    return render(request, "player/create_account.html", context)
+    # user already logged in
+    if (request.user.is_authenticated):
+        return render(request, "player/dashboard.html", {})
+    
+    # user has not logged in
+    return render(request, "player/create_account.html", {})
+
+def dashboard(request: HttpRequest) -> HttpResponse:
+    """
+    Player's dashboard.
+    """
+    # not logged in
+    if (not request.user.is_authenticated):
+        return render(request, "player/home.html", {})
+
+    context = {
+        "name": request.user.get_username(),
+    }
+    return render(request, "player/dashboard.html", context)
+
+def logout_page(request: HttpRequest) -> HttpResponse:
+    """
+    Logout the player.
+    """
+    logout(request=request)
+    return render(request, "player/home.html", {})
+
+
+def check_account(request: HttpRequest) -> HttpResponse:
+    """
+    Check user's name and password.
+    """
+    user = authenticate(
+        request=request,
+        username=request.POST.get("name"),
+        password=request.POST.get("password"),
+    )
+    # invalid password or name
+    if (user == None):
+        context = {
+            "error_message": "Your password or name is invalid.",
+        }
+        return render(request, "player/login.html", context)
+    # login
+    login(
+        request=request,
+        user=user,
+    )
+    # upon success
+    return HttpResponseRedirect(reverse("player:dashboard"))
+
 
 def create_account(request: HttpRequest) -> HttpResponse:
     """
-    Create account.
+    Checks the correctness of inputs and create account.
     """
-    print("got here!")
-
     name = request.POST.get("name")
     # case 1: check if name already exists
-    player = Player.objects.filter(name=name)
+    player = Player.objects.filter(username=name)
     if player:
         print("Error: player's name already exist!")
         context = {
@@ -49,46 +101,33 @@ def create_account(request: HttpRequest) -> HttpResponse:
         }
         return render(request, "player/create_account.html", context)
 
-    # case 2: check if passwords match
-    password = hashlib.sha256(request.POST.get("password").encode('utf-8')).hexdigest()
-    password2 = hashlib.sha256(request.POST.get("password2").encode('utf-8')).hexdigest()
-    if (not hmac.compare_digest(password, password2)):
+    # case 2: check if password is empty
+    if (request.POST.get("password") == "" or request.POST.get("password2") == ""): 
+        print("Error: passwords empty!")
+        context = {
+            "error_message": "Please input some passwords *shy*",
+        }
+        return render(request, "player/create_account.html", context)
+
+    # case 3: check if passwords match
+    if (not (request.POST.get("password") == request.POST.get("password2"))):
         print("Error: passwords differ!")
         context = {
             "error_message": "Passwords differ...",
         }
         return render(request, "player/create_account.html", context)
     
-    # get player's unique ID
-    player_id = uuid.uuid4()
-    # to be safe: check a unique uuid
-    player = Player.objects.filter(player_id=player_id)
-    while (player):
-        player_id = uuid.uuid4()
-        player = Player.objects.filter(player_id=player_id)
-
     # create new player object
     current_level = 0
     new_player = Player(
-        player_id=player_id,
-        name=name,
-        password=password,
+        username=name,
         current_level=current_level,
     )
+    new_player.set_password(request.POST.get("password"))
     new_player.save()
     print("Success: new player created!")
 
     # Always return an HttpResponseRedirect after successfully dealing
     # with POST data. This prevents data from being posted twice if a 
     # user hits the Back button.
-    return HttpResponseRedirect(reverse("player:dashboard", args=(name,)))
-
-
-def dashboard(request: HttpRequest, name: str) -> HttpResponse:
-    """
-    Player's dashboard.
-    """
-    context = {
-        "name": name,
-    }
-    return render(request, "player/dashboard.html", context)
+    return HttpResponseRedirect(reverse("player:dashboard"))
