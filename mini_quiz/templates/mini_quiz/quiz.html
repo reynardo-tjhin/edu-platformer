@@ -11,22 +11,44 @@
 <body>
     <h1>Welcome to Mini Quiz Level {{ level }}</h1>
 
-    <!-- list each question -->
-    {% for question_and_answers in questions %}
+    <!-- temporary so that goes back to home page -->
+    <div class="temp">
+        <a href="{% url 'mini_quiz:index' %}">Home (Mini-Quiz Table of Contents)</a>
+    </div>
 
-        <!-- show the question -->
-        <p>{{ forloop.counter }}. {{ question_and_answers.question.question_text }}</p>
-        
-        <!-- show each answer -->
-        {% for answer in question_and_answers.answers %}
-        <ul>
-            <li>
-                <button>
-                <a href="{% url 'mini_quiz:check_answer' question_and_answers.question.question_id answer.answer_id %}">{{ answer.answer_text }}</a>
-                </button>
-            </li>
-        </ul>
+    <!-- each "question" is a Question model object -->
+    <div class="question">
+        {% for question_and_answers in page_obj %}
+            <p>{{ forloop.counter }}. {{ question_and_answers.question.question_text }}</p>
+            
+            <!-- show the list of answers -->
+            <div class="answers">
+                {% for answer in question_and_answers.answers %}
+                    <ul>
+                        <li>{{ answer.answer_text }}</li>
+                    </ul>
+                {% endfor %}
+            </div>
         {% endfor %}
-    {% endfor %}
+    </div>
+
+    <!-- the "progress" bar to go to different page -->
+    <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page=1">&laquo; first</a>
+                <a href="?page={{ page_obj.previous_page_number }}">previous</a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
+            </span>
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}">next</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
+            {% endif %}
+        </span>
+    </div>
 </body>
 </html>

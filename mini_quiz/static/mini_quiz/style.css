@@ -1,5 +1,9 @@
 button {
-    width: 3rem;
+    width: 100rem;
+}
+
+a {
+    width: 10%;
 }
 
 /* remove the dot */
