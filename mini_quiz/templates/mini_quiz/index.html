@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini Quiz Table of Contents</title>
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'mini_quiz/style.css' %}">
+</head>
+<body>
+    <h1>Welcome to Mini Quiz! Please select a Level!</h1>
+    {% if list_of_mini_quizzes %}
+    <ul>
+        {% for mn_quiz in list_of_mini_quizzes %}
+            <li><a href="{% url 'mini_quiz:quiz' mn_quiz.quiz_id %}">Level {{ mn_quiz.level }}</a>; Summary: {{ mn_quiz.summary }}</li>
+        {% endfor %}
+    </ul>
+    {% endif %}
+</body>
+</html>

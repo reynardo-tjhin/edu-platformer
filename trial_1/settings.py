@@ -34,9 +34,10 @@ INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',          # authenticate users
     'django.contrib.contenttypes',
-    # 'django.contrib.sessions',    # not use this anymore
+    'django.contrib.sessions',
     'django.contrib.messages',      # display notification to user
     'django.contrib.staticfiles',   # images, css files and so on...
+    'mini_quiz.apps.MiniQuizConfig'
 ]
 
 MIDDLEWARE = [
