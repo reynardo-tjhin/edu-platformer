@@ -9,13 +9,22 @@
     <link rel="stylesheet" href="{% static 'mini_quiz/style.css' %}">
 </head>
 <body>
-    <h1>Welcome to Mini Quiz! Please select a Level!</h1>
-    {% if list_of_mini_quizzes %}
-    <ul>
-        {% for mn_quiz in list_of_mini_quizzes %}
-            <li><a href="{% url 'mini_quiz:start_quiz' mn_quiz.quiz_id %}">Level {{ mn_quiz.level }}</a>; Summary: {{ mn_quiz.summary }}</li>
-        {% endfor %}
-    </ul>
-    {% endif %}
+    <div class="temp-navigation">
+        <a href="{% url 'player:home' %}">Homepage</a>
+    </div>
+
+    <div class="title">
+        <h1>Welcome to Mini Quiz! Please select a Level!</h1>
+    </div>
+
+    <div class="mini-quiz-list">
+        {% if list_of_mini_quizzes %}
+        <ul>
+            {% for mn_quiz in list_of_mini_quizzes %}
+                <li><a href="{% url 'mini_quiz:start_quiz' mn_quiz.quiz_id %}">Level {{ mn_quiz.level }}</a>; Summary: {{ mn_quiz.summary }}</li>
+            {% endfor %}
+        </ul>
+        {% endif %}
+    </div>
 </body>
 </html>

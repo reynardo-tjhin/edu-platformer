@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
+    path('', include('player.urls')),
     path('admin/', admin.site.urls),
-    path('mini_quiz/', include('mini_quiz.urls'),)
+    path('mini_quiz/', include('mini_quiz.urls')),
 ]
