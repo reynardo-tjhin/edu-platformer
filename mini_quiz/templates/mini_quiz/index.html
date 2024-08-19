@@ -13,7 +13,7 @@
     {% if list_of_mini_quizzes %}
     <ul>
         {% for mn_quiz in list_of_mini_quizzes %}
-            <li><a href="{% url 'mini_quiz:quiz' mn_quiz.quiz_id %}">Level {{ mn_quiz.level }}</a>; Summary: {{ mn_quiz.summary }}</li>
+            <li><a href="{% url 'mini_quiz:start_quiz' mn_quiz.quiz_id %}">Level {{ mn_quiz.level }}</a>; Summary: {{ mn_quiz.summary }}</li>
         {% endfor %}
     </ul>
     {% endif %}

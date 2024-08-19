@@ -5,6 +5,7 @@ from django.http import (
     HttpResponseRedirect,
     HttpResponse,
 )
+from django.core.paginator import Paginator
 
 from .models import MiniQuiz, Answer
 
@@ -19,28 +20,40 @@ def index(request: HttpRequest) -> HttpResponse:
     }
     return render(request, "mini_quiz/index.html", context)
 
+def start_quiz(request: HttpRequest, quiz_id: int) -> HttpResponse:
+    """
+    To show the start button and to store the start time.
+    """
+    context = {
+        "quiz_id": quiz_id,
+    }
+    return render(request, "mini_quiz/start_quiz.html", context)
+
 def quiz(request: HttpRequest, quiz_id: int) -> HttpResponse:
     """
     List the questions and corresponding answers.
     """
-    # get the mini quiz
-    mini_quiz = get_object_or_404(MiniQuiz, pk=quiz_id)
-    # create a "JSON" data
+    # get the mini quiz object based on the quiz_id
+    mini_quiz = get_object_or_404(MiniQuiz, pk=quiz_id)        
+    
+    # get the question and corresponding answers list
+    question_list = mini_quiz.question_set.all()
+    question_and_answers = []
+    for question in question_list:
+        question_and_answers.append({
+            "question": question,
+            "answers": question.answer_set.all(),
+        })
+    
+    # create paginator
+    paginator = Paginator(question_and_answers, 1) # show 1 question per page.
+    page_number = request.GET.get("page")
+    page_obj = paginator.get_page(page_number)
     context = {
-        "level": mini_quiz.level,
-        "questions": [],
+        "page_obj": page_obj,
     }
-    # add the questions and answers
-    for i, question in enumerate(mini_quiz.question_set.all()):
-        # question has a question text and answer texts
-        context["questions"].append({})
-        context["questions"][i]["question"] = question
-        context["questions"][i]["answers"] = []
-        # add the answers
-        for answer in question.answer_set.all():
-            context["questions"][i][f"answers"].append(answer)
-    # render the html file
-    return render(request, "mini_quiz/quiz.html", context)
+    return render(request, "./mini_quiz/quiz.html", context)
+
 
 def check_answer(request: HttpRequest, question_id: int, answer_id: int) -> HttpResponse:
     """
@@ -51,7 +64,7 @@ def check_answer(request: HttpRequest, question_id: int, answer_id: int) -> Http
     
     # the selected answer is correct
     if (selected_answer.is_correct_answer):
-        return HttpResponseRedirect(request, )
+        return HttpResponseRedirect(reverse())
     # selected answer is incorrect
     else:
         pass
