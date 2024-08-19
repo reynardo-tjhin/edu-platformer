@@ -1,13 +1,14 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
 
 # Create your models here.
-class Player(models.Model):
-    # stores the uuid of the player
-    player_id = models.CharField(max_length=32)
+class Player(AbstractUser):
+    # # stores the uuid of the player
+    # player_id = models.CharField(max_length=32, unique=True)
+    # USERNAME_FIELD = "player_id"
+    # store the name and other descriptions for the game
+    username = models.CharField(max_length=50, unique=True)
+    current_level = models.IntegerField(default=0)
 
-    # store the name and password
-    name = models.CharField(max_length=50)
-    password = models.CharField(max_length=64) # using sha256 algorithm of hashlib
-
-    # store the other descriptions for the game
-    current_level = models.IntegerField()
+    def __str__(self) -> str:
+        return self.username
