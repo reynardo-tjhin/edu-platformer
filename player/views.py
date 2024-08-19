@@ -11,3 +11,10 @@ def home(request: HttpRequest) -> HttpResponse:
     """
     context = {}
     return render(request, "player/home.html", context)
+
+def login(request: HttpRequest) -> HttpResponse:
+    """
+    Player logging in.
+    """
+    context = {}
+    return render(request, "player/login.html", context)
