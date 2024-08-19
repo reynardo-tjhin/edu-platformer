@@ -6,7 +6,7 @@
     <title>Welcome!</title>
 
     {% load static %}
-    <link rel="stylesheet" href="{% static 'mini_quiz/style.css' %}">
+    <link rel="stylesheet" href="{% static 'player/style.css' %}">
 </head>
 <body>
     <!-- navigation bar -->
@@ -38,7 +38,7 @@
 
         <!-- create account page -->
         <div class="create-account">
-            <a href="">
+            <a href="{% url 'player:create-account' %}">
                 <button>Create Account</button>
             </a>
         </div>
