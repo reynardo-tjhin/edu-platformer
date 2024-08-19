@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Welcome!</title>
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'mini_quiz/style.css' %}">
 </head>
 <body>
     <!-- navigation bar -->
@@ -21,8 +24,8 @@
     <!-- sign in/create/play as guest -->
     <div class="sign-in">
         <!-- dashboard page -->
-        <div class="sign0in">
-            <a href="">
+        <div class="sign-in">
+            <a href="{% url 'player:login' %}">
                 <button>Log In</button>
             </a>
         </div>
