@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini Quiz Level {{ level }}</title>
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'mini_quiz/style.css' %}">
+</head>
+<body>
+    <h1>Welcome to Mini Quiz Level {{ level }}</h1>
+
+    <!-- list each question -->
+    {% for question_and_answers in questions %}
+
+        <!-- show the question -->
+        <p>{{ forloop.counter }}. {{ question_and_answers.question.question_text }}</p>
+        
+        <!-- show each answer -->
+        {% for answer in question_and_answers.answers %}
+        <ul>
+            <li>
+                <button>
+                <a href="{% url 'mini_quiz:check_answer' question_and_answers.question.question_id answer.answer_id %}">{{ answer.answer_text }}</a>
+                </button>
+            </li>
+        </ul>
+        {% endfor %}
+    {% endfor %}
+</body>
+</html>
