@@ -1,3 +1,5 @@
+import uuid
+
 from django.shortcuts import render
 from django.urls import reverse
 from django.http import (
@@ -15,7 +17,7 @@ def home(request: HttpRequest) -> HttpResponse:
     """
     # user already logged in
     if (request.user.is_authenticated):
-        return render(request, "player/dashboard.html", {})
+        return HttpResponseRedirect(reverse("player:dashboard"))
     
     # user has not logged in
     return render(request, "player/home.html", {})
@@ -26,7 +28,7 @@ def login_pageview(request: HttpRequest) -> HttpResponse:
     """
     # user already logged in
     if (request.user.is_authenticated):
-        return render(request, "player/dashboard.html", {})
+        return HttpResponseRedirect(reverse("player:dashboard"))
     
     # user has not logged in
     return render(request, "player/login.html", {})
@@ -37,10 +39,28 @@ def create_account_pageview(request: HttpRequest) -> HttpResponse:
     """
     # user already logged in
     if (request.user.is_authenticated):
-        return render(request, "player/dashboard.html", {})
+        return HttpResponseRedirect(reverse("player:dashboard"))
     
     # user has not logged in
     return render(request, "player/create_account.html", {})
+
+def create_guest_page(request: HttpRequest) -> HttpResponse:
+    """
+    Create a player with a random ID and save to database.
+    """
+    # create new player (random)
+    username = "player-" + str(uuid.uuid4())[24:] # get the last 12 letters
+    password = str(uuid.uuid4()) # generate random id as the password
+    new_player = Player(
+        username=username,
+        current_level=0,
+    )
+    new_player.set_password(password)
+    new_player.save()
+
+    # automatically login the player
+    login(request, new_player)
+    return HttpResponseRedirect(reverse("player:dashboard"))
 
 def dashboard(request: HttpRequest) -> HttpResponse:
     """
@@ -48,7 +68,7 @@ def dashboard(request: HttpRequest) -> HttpResponse:
     """
     # not logged in
     if (not request.user.is_authenticated):
-        return render(request, "player/home.html", {})
+        return HttpResponseRedirect(reverse("player:home"))
 
     context = {
         "name": request.user.get_username(),
@@ -60,8 +80,13 @@ def logout_page(request: HttpRequest) -> HttpResponse:
     Logout the player.
     """
     logout(request=request)
-    return render(request, "player/home.html", {})
+    return HttpResponseRedirect(reverse("player:home"))
 
+
+
+###################################################################
+############################# BACKEND #############################
+###################################################################
 
 def check_account(request: HttpRequest) -> HttpResponse:
     """
@@ -85,7 +110,6 @@ def check_account(request: HttpRequest) -> HttpResponse:
     )
     # upon success
     return HttpResponseRedirect(reverse("player:dashboard"))
-
 
 def create_account(request: HttpRequest) -> HttpResponse:
     """
@@ -126,6 +150,12 @@ def create_account(request: HttpRequest) -> HttpResponse:
     new_player.set_password(request.POST.get("password"))
     new_player.save()
     print("Success: new player created!")
+
+    # login in the new player immediately
+    login(
+        request=request,
+        user=new_player,
+    )
 
     # Always return an HttpResponseRedirect after successfully dealing
     # with POST data. This prevents data from being posted twice if a 

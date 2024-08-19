@@ -13,7 +13,7 @@
     <div class="nav">
         <!-- TODO -->
         <!-- temporary link to mini-game table of contents -->
-        <a href="{% url 'mini_quiz:index' %}">Go to Mini-Quiz!</a>
+        <!-- <a href="{% url 'mini_quiz:index' %}">Go to Mini-Quiz!</a> -->
     </div>
 
     <!-- content -->
@@ -31,7 +31,7 @@
         </div>
 
         <div class="play-as-guest">
-            <a href="">
+            <a href="{% url 'player:create-guest' %}">
                 <button>Play as Guest</button>
             </a>
         </div>
