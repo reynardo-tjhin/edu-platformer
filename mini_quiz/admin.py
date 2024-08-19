@@ -5,16 +5,22 @@ from .models import MiniQuiz, Question, Answer
 # Register your models here.
 class AnswerInLine(admin.TabularInline):
     model = Answer
-    extra = 4
+    extra = 2
 
-class QuestionInLine(admin.TabularInline):
+class QuestionAdmin(admin.ModelAdmin):
+    inlines = [AnswerInLine]
+admin.site.register(Question, QuestionAdmin)
+
+class QuestionLinkInLine(admin.TabularInline):
     model = Question
-    extra = 1
+    fieldsets = [
+        (None, {"fields": ["question_text"]}),
+    ]
+    show_change_link = True
 
 class MiniQuizAdmin(admin.ModelAdmin):
     fieldsets = [
-        (None, {"fields": ["level", "genre", "summary"]}),
+        (None, {"fields": ["quiz_id", "level", "genre", "summary"]}),
     ]
-    inlines = [QuestionInLine, AnswerInLine]
-
+    inlines = [QuestionLinkInLine]
 admin.site.register(MiniQuiz, MiniQuizAdmin)
