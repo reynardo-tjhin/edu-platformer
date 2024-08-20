@@ -14,7 +14,7 @@ admin.site.register(Question, QuestionAdmin)
 class QuestionLinkInLine(admin.TabularInline):
     model = Question
     fieldsets = [
-        (None, {"fields": ["question_text"]}),
+        (None, {"fields": ["question_id", "question_text"]}),
     ]
     show_change_link = True
 
