@@ -1,5 +1,7 @@
 from django.db import models
 
+from player.models import Player
+
 # Create your models here.
 class MiniQuiz(models.Model):
     
@@ -39,3 +41,19 @@ class Answer(models.Model):
 
     def __str__(self) -> str:
         return f"{self.answer_text}"
+
+
+# RELATIONSHIP MODELS
+class PlayerAnswers(models.Model):
+    """
+    This is a relationship between 'Player' and 'Quiz' models.
+    Player 'answers' the quiz question without knowing which answer the player selected.
+    """
+    username = models.ForeignKey(Player, on_delete=models.CASCADE)
+    question_id = models.ForeignKey(Question, on_delete=models.CASCADE)
+
+    is_correct = models.BooleanField()
+    time_answered = models.DateTimeField()
+
+    def __str__(self) -> str:
+        return f"{self.username} is attempting {self.question_id}"
