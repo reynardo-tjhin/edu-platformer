@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',   # images, css files and so on...
     'mini_quiz.apps.MiniQuizConfig',
     'player.apps.PlayerConfig',
+    'platformer.apps.PlatformerConfig',
 ]
 
 MIDDLEWARE = [
