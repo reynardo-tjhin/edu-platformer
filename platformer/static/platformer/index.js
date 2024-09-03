@@ -10,38 +10,38 @@ let background
 let doors
 
 const player = new Player({
-    imageSrc: './Assets/img/king/idle.png',
+    imageSrc: "/static/platformer/images/king/idle.png",
     frameRate: 11,
     animations: { 
         idleRight: {
             frameRate: 11,
             frameBuffer: 2,
             loop: true,
-            imageSrc: './Assets/img/king/idle.png',
+            imageSrc: '/static/platformer/images/king/idle.png',
         },
         idleLeft: {
             frameRate: 11,
             frameBuffer: 2,
             loop: true,
-            imageSrc: './Assets/img/king/idleLeft.png',
+            imageSrc: '/static/platformer/images/king/idleLeft.png',
         },
         runRight: {
             frameRate: 8,
             frameBuffer: 4,
             loop: true,
-            imageSrc: './Assets/img/king/runRight.png',
+            imageSrc: '/static/platformer/images/king/runRight.png',
         },
         runLeft: {
             frameRate: 8,
             frameBuffer: 4,
             loop: true,
-            imageSrc: './Assets/img/king/runLeft.png',
+            imageSrc: '/static/platformer/images/king/runLeft.png',
         },
         enterDoor: {
             frameRate: 8,
             frameBuffer: 4,
             loop: false,
-            imageSrc: './Assets/img/king/enterDoor.png', 
+            imageSrc: '/static/platformer/images/king/enterDoor.png', 
             onComplete: () => {
                 console.log("completed animation")
                 gsap.to(overlay, {
@@ -79,7 +79,7 @@ let levels = {
                     x: 0,
                     y: 0,
                 }, 
-                imageSrc: './Assets/img/backgroundLevel1.png',
+                imageSrc: '/static/platformer/images/backgroundLevel1.png',
             })
 
             doors = [
@@ -88,7 +88,7 @@ let levels = {
                         x: 781,
                         y: 268,
                     },
-                    imageSrc: './Assets/img/doorOpen.png',
+                    imageSrc: '/static/platformer/images/doorOpen.png',
                     frameRate: 5,
                     frameBuffer: 5,
                     loop: false,
@@ -112,7 +112,7 @@ let levels = {
                     x: 0,
                     y: 0,
                 }, 
-                imageSrc: './Assets/img/backgroundLevel2.png',
+                imageSrc: '/static/platformer/images/backgroundLevel2.png',
             })
 
             doors = [
@@ -121,7 +121,7 @@ let levels = {
                         x: 772,
                         y: 336,
                     },
-                    imageSrc: './Assets/img/doorOpen.png',
+                    imageSrc: '/static/platformer/images/doorOpen.png',
                     frameRate: 5,
                     frameBuffer: 5,
                     loop: false,
@@ -145,7 +145,7 @@ let levels = {
                     x: 0,
                     y: 0,
                 }, 
-                imageSrc: './Assets/img/backgroundLevel3.png',
+                imageSrc: '/static/platformer/images/backgroundLevel3.png',
             })
 
             doors = [
@@ -154,7 +154,7 @@ let levels = {
                         x: 176,
                         y: 334,
                     },
-                    imageSrc: './Assets/img/doorOpen.png',
+                    imageSrc: '/static/platformer/images/doorOpen.png',
                     frameRate: 5,
                     frameBuffer: 5,
                     loop: false,
