@@ -57,3 +57,19 @@ class PlayerAnswers(models.Model):
 
     def __str__(self) -> str:
         return f"{self.username} is attempting {self.question_id}"
+    
+class PlayerDoes(models.Model):
+    """
+    This is a relationship between 'Player' and 'MiniQuiz' models.
+    Player 'completes' the quiz after answer everything correctly and within time.
+    """
+    username = models.ForeignKey(Player, on_delete=models.CASCADE)
+    quiz_id = models.ForeignKey(MiniQuiz, on_delete=models.CASCADE)
+
+    status = models.BooleanField() # 0 indicates failed, 1 indicates completed
+    start_time = models.DateTimeField()
+    end_time = models.DateTimeField(null=True)
+
+
+    def __str__(self) -> str:
+        return f"{self.username} does {self.quiz_id}"

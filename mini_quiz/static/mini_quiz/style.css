@@ -1,12 +1,17 @@
-button {
-    width: 100rem;
+/* for highlighting wrong answer */
+.answer {
+    padding: 10px;
+    margin: 5px 0;
+    border: 1px solid #ccc;
 }
 
-a {
-    width: 10%;
+.highlight {
+    background-color: yellow;
+    border-color: red;
 }
 
 /* remove the dot */
 ul {
     list-style-type: none;
 }
+

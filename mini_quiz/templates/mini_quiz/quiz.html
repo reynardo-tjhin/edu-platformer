@@ -3,10 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mini Quiz Level {{ level }}</title>
+    <title>Mini Quiz Level {{ level }}</title>    
 
     {% load static %}
     <link rel="stylesheet" href="{% static 'mini_quiz/style.css' %}">
+
+    <script>
+        // function to get the query parameter value by name
+        function getQueryParameter(name) {
+            const params = new URLSearchParams(window.location.search);
+            return params.get(name);
+        }
+        // display the query parameter value on the page
+        document.addEventListener("DOMContentLoaded", () => {
+            const message = getQueryParameter('message');
+            const answerId = getQueryParameter('answer_id');
+            // decode the message (in case of URL encoding)
+            const decodedMessage = decodeURIComponent(message);
+            // check if the message is "incorrect"
+            if (decodedMessage == 'incorrect') {
+                console.log("got here! (2)");
+                const answerElement = document.getElementById(`answer-${answerId}`);
+                if (answerElement) {
+                    answerElement.classList.add('highlight');
+                }
+            }
+            console.log("got here!");
+            console.log(decodedMessage);
+        })
+    </script>
 </head>
 <body>
     <h1>Welcome to Mini Quiz Level {{ level }}</h1>
@@ -24,31 +49,16 @@
             <!-- show the list of answers -->
             <div class="answers">
                 {% for answer in question_and_answers.answers %}
-                    <ul>
-                        <li>{{ answer.answer_text }}</li>
-                    </ul>
+                <div id="answer-{{ answer.answer_id }}" class="answer">
+                    <a href="{% url 'mini_quiz:check-answer' quiz_id question_and_answers.question.question_id answer.answer_id %}?page={{ page_obj.number }}&num_pages={{ page_obj.paginator.num_pages }}">
+                        <button>
+                            {{ answer.answer_text }}
+                        </button>
+                    </a>
+                </div>
                 {% endfor %}
             </div>
         {% endfor %}
-    </div>
-
-    <!-- the "progress" bar to go to different page -->
-    <div class="pagination">
-        <span class="step-links">
-            {% if page_obj.has_previous %}
-                <a href="?page=1">&laquo; first</a>
-                <a href="?page={{ page_obj.previous_page_number }}">previous</a>
-            {% endif %}
-
-            <span class="current">
-                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}.
-            </span>
-
-            {% if page_obj.has_next %}
-                <a href="?page={{ page_obj.next_page_number }}">next</a>
-                <a href="?page={{ page_obj.paginator.num_pages }}">last &raquo;</a>
-            {% endif %}
-        </span>
     </div>
 </body>
 </html>
