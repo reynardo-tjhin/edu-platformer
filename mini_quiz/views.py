@@ -34,22 +34,29 @@ def start_quiz(request: HttpRequest, quiz_id: int) -> HttpResponse:
     if (not request.user.is_authenticated):
         return render(request, "player/home.html")
 
+    # get the current time
+    time_start = timezone.now()
+
     #TODO: save the time the player starts the quiz
     # save a relationship object
     # check whether the attempt already exists
     attempt = PlayerDoes.objects.filter(username=request.user.id, quiz_id=quiz_id)
     if (attempt.count() == 0):
         # create new attempt
-        time_answered = timezone.now()
         new_attempt = PlayerDoes(
             username=request.user,
             quiz_id=MiniQuiz.objects.get(pk=quiz_id),
             status=False,
-            start_time=time_answered,
+            start_time=time_start,
             end_time=None,
         )
         new_attempt.save()
         print("New Attempt created!")
+    else:
+        current_attempt = attempt[0]
+        current_attempt.start_time = time_start
+        current_attempt.save()
+        print("Current Attempt's start time updated!")
 
     context = {
         "quiz_id": quiz_id,
