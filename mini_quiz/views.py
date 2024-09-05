@@ -9,6 +9,7 @@ from django.core.paginator import Paginator
 from django.utils import timezone
 
 from .models import MiniQuiz, Question, Answer, PlayerAnswers, PlayerDoes
+from player.models import Player
 
 # Create your views here.
 def index(request: HttpRequest) -> HttpResponse:
@@ -17,7 +18,7 @@ def index(request: HttpRequest) -> HttpResponse:
     """
     # check if authenticated
     if (not request.user.is_authenticated):
-        return render(request, "player/home.html", {})
+        return render(request, "player/home.html")
 
     list_of_mini_quizzes = MiniQuiz.objects.order_by("level")
     context = {
@@ -31,7 +32,25 @@ def start_quiz(request: HttpRequest, quiz_id: int) -> HttpResponse:
     """
     # check if authenticated
     if (not request.user.is_authenticated):
-        return render(request, "player/home.html", {})
+        return render(request, "player/home.html")
+
+    #TODO: save the time the player starts the quiz
+    # save a relationship object
+    # check whether the attempt already exists
+    attempt = PlayerDoes.objects.filter(username=request.user.id, quiz_id=quiz_id)
+    if (attempt.count() == 0):
+        # create new attempt
+        time_answered = timezone.now()
+        new_attempt = PlayerDoes(
+            username=request.user,
+            quiz_id=MiniQuiz.objects.get(pk=quiz_id),
+            status=False,
+            start_time=time_answered,
+            end_time=None,
+        )
+        new_attempt.save()
+        print("New Attempt created!")
+
     context = {
         "quiz_id": quiz_id,
     }
@@ -43,7 +62,7 @@ def quiz(request: HttpRequest, quiz_id: int) -> HttpResponse:
     """
     # check if authenticated
     if (not request.user.is_authenticated):
-        return render(request, "player/home.html", {})
+        return render(request, "player/home.html")
 
     # get the mini quiz object based on the quiz_id
     mini_quiz = get_object_or_404(MiniQuiz, pk=quiz_id)        
@@ -69,6 +88,12 @@ def quiz(request: HttpRequest, quiz_id: int) -> HttpResponse:
     return render(request, "./mini_quiz/quiz.html", context)
 
 
+
+
+###################################################################
+############################# BACKEND #############################
+###################################################################
+
 def check_answer(request: HttpRequest, quiz_id: int, question_id: int, answer_id: int) -> HttpResponse:
     """
     Check the answer based on the question and answer.
@@ -90,26 +115,30 @@ def check_answer(request: HttpRequest, quiz_id: int, question_id: int, answer_id
     new_answer.save()
     print("New Player's Answer created!")
 
-    # store new data when user attempts the first question
-    if (request.GET['page'] == 1):
-        new_attempt = PlayerDoes(
-            request.user,
-            quiz_id=MiniQuiz.objects.get(pk=quiz_id),
-            status=True,
-            start_time=time_answered,
-            end_time=None,
-        )
-        new_attempt.save()
-        print("New Attempt created!")
-
     # answer is correct -> go to the next question
     if (is_correct):
-        # check the last page?
+        
+        # check the last page
+        # the user has completed the mini-quiz
         if (request.GET['page'] == request.GET['num_pages']):
-            # the user has completed the mini-quiz
+
             # update the end time
-            
-            return None
+            time_completed = timezone.now()
+            attempt = PlayerDoes.objects.get(username=request.user.id, quiz_id=quiz_id)            
+            attempt.status = True
+            attempt.end_time = time_completed
+            attempt.save()
+            print("Player successfully completes the quiz!")
+
+            # update the player's level
+            player = Player.objects.get(username=request.user.username)
+            quiz = MiniQuiz.objects.get(quiz_id=quiz_id)
+            player.current_level = quiz.level
+            player.save()
+            print("Player's level successfully increases!")
+
+            # return to the player's dashboard
+            return HttpResponseRedirect(reverse("player:dashboard"))
 
         resultant_url = reverse("mini_quiz:quiz", args=(quiz_id,))
         if 'page' in request.GET:

@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import MiniQuiz, Question, Answer
+from .models import MiniQuiz, Question, Answer, PlayerAnswers, PlayerDoes
 
 # Register your models here.
 class AnswerInLine(admin.TabularInline):
@@ -24,3 +24,6 @@ class MiniQuizAdmin(admin.ModelAdmin):
     ]
     inlines = [QuestionLinkInLine]
 admin.site.register(MiniQuiz, MiniQuizAdmin)
+
+admin.site.register(PlayerDoes)
+admin.site.register(PlayerAnswers)

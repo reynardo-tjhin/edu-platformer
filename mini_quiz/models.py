@@ -68,7 +68,7 @@ class PlayerDoes(models.Model):
 
     status = models.BooleanField() # 0 indicates failed, 1 indicates completed
     start_time = models.DateTimeField()
-    end_time = models.DateTimeField()
+    end_time = models.DateTimeField(null=True)
 
 
     def __str__(self) -> str:

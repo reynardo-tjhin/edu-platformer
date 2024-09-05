@@ -31,6 +31,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'daphne',                       # pure-Python ASGI server for UNIX
+    'channels',                     # to communicate with websocket server
     'django.contrib.admin',
     'django.contrib.auth',          # authenticate users
     'django.contrib.contenttypes',
@@ -69,8 +71,9 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = 'trial_1.wsgi.application'
+# WSGI_APPLICATION = 'trial_1.wsgi.application'
 
+ASGI_APPLICATION = 'trial_1.asgi.application'
 
 AUTH_USER_MODEL = 'player.Player'
 
