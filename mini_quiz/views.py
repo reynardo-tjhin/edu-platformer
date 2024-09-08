@@ -37,7 +37,6 @@ def start_quiz(request: HttpRequest, quiz_id: int) -> HttpResponse:
     # get the current time
     time_start = timezone.now()
 
-    #TODO: save the time the player starts the quiz
     # save a relationship object
     # check whether the attempt already exists
     attempt = PlayerDoes.objects.filter(username=request.user.id, quiz_id=quiz_id)
@@ -62,6 +61,23 @@ def start_quiz(request: HttpRequest, quiz_id: int) -> HttpResponse:
         "quiz_id": quiz_id,
     }
     return render(request, "mini_quiz/start_quiz.html", context)
+
+def end_quiz(request: HttpRequest, quiz_id: int) -> HttpResponse:
+    """
+    Shows the end of the quiz.
+    """
+    # check if authenticated
+    if (not request.user.is_authenticated):
+        return render(request, "player/home.html")
+
+    # quiz successfully completed
+    attempt = PlayerDoes.objects.get(username=request.user.id, quiz_id=quiz_id)
+    if (attempt):
+        message = "Successfully Completed Quiz " + str(quiz_id)
+    else:
+        message = "Failed to Complete Quiz " + str(quiz_id)
+
+    return render(request, "./mini_quiz/end_quiz.html", {"message": message})
 
 def quiz(request: HttpRequest, quiz_id: int) -> HttpResponse:
     """
@@ -145,7 +161,7 @@ def check_answer(request: HttpRequest, quiz_id: int, question_id: int, answer_id
             print("Player's level successfully increases!")
 
             # return to the player's dashboard
-            return HttpResponseRedirect(reverse("player:dashboard"))
+            return HttpResponseRedirect(reverse("mini_quiz:end-quiz", args=(quiz_id,)))
 
         resultant_url = reverse("mini_quiz:quiz", args=(quiz_id,))
         if 'page' in request.GET:

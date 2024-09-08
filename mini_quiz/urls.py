@@ -11,6 +11,9 @@ urlpatterns = [
     # preventing tampering of "timer"
     path("<int:quiz_id>/start/", views.start_quiz, name="start_quiz"),
 
+    # the page where the user finishes the quiz successfully/failed
+    path("<int:quiz_id>/end/", views.end_quiz, name="end-quiz"),
+
     # the quiz page
     # paginator looks like http://127.0.0.1:8000/mini_quiz/1/?page=2
     path("<int:quiz_id>/", views.quiz, name="quiz"),

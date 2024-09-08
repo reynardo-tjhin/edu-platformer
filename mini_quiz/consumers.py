@@ -57,6 +57,8 @@ class TimerConsumer(AsyncWebsocketConsumer):
             # sleep for 1 second
             await asyncio.sleep(1)
 
+        # disconnect with the client
+
 
     async def disconnect(self, close_code):
         """
