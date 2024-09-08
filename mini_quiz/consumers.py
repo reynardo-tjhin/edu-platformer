@@ -37,7 +37,8 @@ class TimerConsumer(AsyncWebsocketConsumer):
         start_time = await get_start_time(user_id, quiz_id)
 
         # send timer update every second
-        for _ in range(60): # assuming a 60-second timer currently
+        time = 10
+        for _ in range(time): # assuming a 60-second timer currently
 
             # when client sends a 'disconnect' request to the WebSocket
             if (self.stop):
@@ -51,14 +52,14 @@ class TimerConsumer(AsyncWebsocketConsumer):
 
             # send the text data (the time left) to the client
             await self.send(text_data=json.dumps({
-                'time': 60 - diff
+                'time': time - diff
             }))
 
             # sleep for 1 second
             await asyncio.sleep(1)
 
         # disconnect with the client
-
+        await self.close()
 
     async def disconnect(self, close_code):
         """
@@ -67,7 +68,7 @@ class TimerConsumer(AsyncWebsocketConsumer):
         self.stop = True
         await self.task
         sync.async_to_sync(print("WebSocket Disconnected..."))
-        self.close()
+        await self.close()
 
     async def receive(self, text_data):
         """

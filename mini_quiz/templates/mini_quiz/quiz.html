@@ -48,7 +48,7 @@
 
     <!-- add the timer here -->
     <div class="timer">
-        You have <span id="timer"></span> seconds...
+        You have <span id="timer"></span> seconds left...
     </div>
 
     <!-- each "question" is a Question model object -->
@@ -69,6 +69,11 @@
                 {% endfor %}
             </div>
         {% endfor %}
+    </div>
+
+    <!-- submit button -->
+    <div class="submit">
+        <a id="submit" href="{% url 'mini_quiz:end-quiz' quiz_id %}" style="display: none;">submit</a>
     </div>
 
     <!-- script to include websocket -->
@@ -101,6 +106,8 @@
             console.error('WebSocket closed unexpectedly');
 
             // activate the submit button -> the FAILED button
+            console.log('WebSocket closed');
+            document.getElementById("submit").click();
         };
 
     </script>
