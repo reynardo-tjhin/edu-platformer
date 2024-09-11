@@ -22,6 +22,11 @@ pip install -r requirements.txt
 
 ## Bugs Tracking
 
+- [URGENT!] The timer has problems!
+  - Due to `for _ in range(10)`, the timer still continues because paginate always refresh the page
+  - To fix this: the only solution is to store the next ending time
+  - Then, get the difference between the times to replace the `10`
+  - This requires to change the model's data
 - Currently player can only attempt the quiz ONCE
   - This is due to the way the data is saved.
   - An attempt is created and updated.
