@@ -52,13 +52,16 @@ class TimerConsumer(AsyncWebsocketConsumer):
 
             # send the text data (the time left) to the client
             await self.send(text_data=json.dumps({
-                'time': time - diff
+                'time': time - diff,
             }))
 
             # sleep for 1 second
             await asyncio.sleep(1)
 
         # disconnect with the client
+        await self.send(text_data=json.dumps({
+            'message': 'timer expires',
+        }))
         await self.close()
 
     async def disconnect(self, close_code):

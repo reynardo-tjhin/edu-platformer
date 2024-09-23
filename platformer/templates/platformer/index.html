@@ -17,6 +17,16 @@
     </div>
     
     <canvas></canvas>
+
+    <!-- get some info from database, particularly the user's current level -->
+    <div class="info" style="display: none;">
+        {{ request.user.current_level|json_script:"current_level" }}
+    </div>
+
+    <!-- create a submit button -->
+    <div class="submit" style="display: none;">
+        <a id="submit" href="{% url 'mini_quiz:start_quiz' request.user.current_level %}"></a>
+    </div>
     
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" 
         integrity="sha512-7eHRwcbYkK4d9g/6tD/mhkf++eoTHwpNM9woBxtPUBWm67zeAfFC+HrdoE2GanKeocly/VxeLvIqwvCdk7qScg==" 
@@ -24,6 +34,9 @@
     </script>
     
     <!-- Import the JavaScript codes -->
+    <script>
+        console.log("got here! (index.html)!");
+    </script>
     {% load static %}
     <script src="{% static 'platformer/utils.js' %}"></script>
     <script src="{% static 'platformer/data/collisions.js' %}"></script>

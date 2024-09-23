@@ -1,14 +1,19 @@
 const canvas = document.querySelector('canvas');
 const c = canvas.getContext('2d');
 
+// define the gameplay's area: canvas' width and height
 canvas.width = 64 * 16;
 canvas.height = 64 * 9;
 
+console.log("got here! (index.js)");
+
+// define some variables
 let parsedCollisions
 let collisionBlocks
 let background
 let doors
 
+// create a player variable
 const player = new Player({
     imageSrc: "/static/platformer/images/king/idle.png",
     frameRate: 11,
@@ -47,6 +52,7 @@ const player = new Player({
                 gsap.to(overlay, {
                     opacity: 1,
                     onComplete: () => {
+                        document.getElementById("submit").click();
                         level++
                         if (level === 4) level = 1
                         levels[level].init()
@@ -57,13 +63,11 @@ const player = new Player({
                         })
                     }
                 })
-
             }   
         }
     },
 });
 
-let level = 1
 // Include all items that will change on a level basis
 let levels = {
     1: {
@@ -165,11 +169,7 @@ let levels = {
     }
 }
 
-
-
-
-
-
+// create a variable to store the possible key pressed
 const keys = {
     w: {
         pressed: false
@@ -186,8 +186,7 @@ const overlay = {
     opacity: 0
 }
 
-
-
+// animate the objects
 // let bottom = y + height;
 function animate() {
     window.requestAnimationFrame(animate);
@@ -200,9 +199,9 @@ function animate() {
     doors.forEach(door => {
         door.draw();
     });
-    player.handleInput(keys)
+    player.handleInput(keys);
     player.draw();
-    player.update()
+    player.update();
 
     // globalAlpha only applies to whatever inside .save() and .restore()
     c.save()
@@ -212,7 +211,13 @@ function animate() {
     c.restore()
 }
 
-levels[level].init()
+// define the user's current level from database
+let level = JSON.parse(document.getElementById("current_level").textContent);
+console.log("level: " + level);
+
+// main
+// start the level and animate
+levels[level].init();
 animate();
 
 

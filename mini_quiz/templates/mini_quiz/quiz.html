@@ -44,6 +44,7 @@
     <div class="info">
         {{ request.user.id|json_script:"user_id" }}
         {{ quiz_id|json_script:"quiz_id" }}
+        {{ success|json_script:"success" }}
     </div>
 
     <!-- add the timer here -->
@@ -85,6 +86,7 @@
         // send the quiz id and username
         let user_id = JSON.parse(document.getElementById('user_id').textContent);
         let quiz_id = JSON.parse(document.getElementById('quiz_id').textContent);
+        let is_success = JSON.parse(document.getElementById('success').textContent);
         timerSocket.addEventListener("open", (ev) => {
             timerSocket.send(JSON.stringify({
                 'message': 'Sent a Message!',
@@ -100,14 +102,17 @@
         timerSocket.onmessage = function(e) {
             const data = JSON.parse(e.data);
             document.getElementById('timer').innerText = data['time'];
+
+            // timer's up! go to submit button
+            if (data['message'] === 'timer expires') {
+                console.log("timer's up!");
+                timerSocket.close();
+                document.getElementById("submit").click();
+            }
         };
 
         timerSocket.onclose = function(e) {
             console.error('WebSocket closed unexpectedly');
-
-            // activate the submit button -> the FAILED button
-            console.log('WebSocket closed');
-            document.getElementById("submit").click();
         };
 
     </script>
