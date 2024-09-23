@@ -1,5 +1,13 @@
 # Educational Platformer Game
 
+## Description
+
+[To be filled]
+
+## Sample
+
+[To be filled with pictures]
+
 ## Requirements
 
 Please download all the required libraries/packages in the requirements.txt
