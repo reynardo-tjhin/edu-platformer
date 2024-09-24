@@ -9,15 +9,6 @@ from asgiref.sync import sync_to_async
 from datetime import timezone
 
 @sync_to_async
-def get_start_time(user_id: int, quiz_id: int) -> datetime.datetime:
-    """
-    Get the start time based on the username and the quiz
-    """
-    attempts = PlayerDoes.objects.filter(username=user_id, quiz_id=quiz_id)
-    recent_attempt = attempts[attempts.count() - 1]
-    return recent_attempt.start_time
-
-@sync_to_async
 def get_end_time(user_id: int, quiz_id: int) -> datetime.datetime:
     """
     Get the designated end time based on the username and the quiz 
@@ -45,13 +36,13 @@ class TimerConsumer(AsyncWebsocketConsumer):
         Count down the timer (asynchronously).
         """
         # get the starting time
-        # start_time = await get_start_time(user_id, quiz_id)
         curr_time = datetime.datetime.now(timezone.utc)
         end_time = await get_end_time(user_id, quiz_id)
         time_left = (end_time - curr_time).seconds
 
         # send timer update every second
-        for t_left in range(time_left + 1, -1, -1): # assuming a 60-second timer currently
+        # let 2 seconds as the buffer time
+        for t_left in range(time_left + 2, -1, -1):
 
             # when client sends a 'disconnect' request to the WebSocket
             if (self.stop):
