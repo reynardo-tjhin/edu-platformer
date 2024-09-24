@@ -1,0 +1,93 @@
+body {
+    position: relative;
+
+    /* This makes the body element take up the full height of the viewport (the visible part of the web page). */
+    height: 100vh;
+    
+    /* This makes the body element take up the full width of the viewport. */
+    width: 100vw;
+    
+    /* Hides any overflow content both vertically (overflow-y) and horizontally (overflow-x). This prevents scrollbars from appearing if the content exceeds the size of the viewport. */
+    overflow: hidden;
+
+    display: flex;
+
+    /* Center horizontally */
+    justify-content: center;
+
+    /* Center vertically */
+    align-items: center;
+}
+
+/* 
+This method creates a semi-transparent overlay on top of the background image using a pseudo-element. 
+The ::before pseudo-element creates a full-screen layer that contains the background image.
+*/
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: url("/static/player/images/background.jpg");
+    
+    /* Stretches the background image to cover 100% of both the width and height of the body. This makes the image fill the entire screen. */
+    background-size: 100% 100%;
+
+    /* Ensures that the background image does not repeat itself. */
+    background-repeat: no-repeat;
+
+    /* Change this value to adjust the opacity */
+    opacity: 0.5; 
+
+    /* Ensure it's behind the content */
+    z-index: -1;  
+}
+
+.box {
+    /* When you set display: flex; on the <body> (or any other container element), the direct child elements (such as <div> tags) will by default be placed horizontally, one next to the other. This happens because the default value for the flex-direction property is row. */
+    display: flex;
+
+    /* If you want the divs to be stacked vertically instead of horizontally, you can change the flex-direction to column. */
+    flex-direction: column;
+    background-color: #d3d7f8;
+    
+    /* Box width */
+    width: 800px;
+
+    /* Box height */
+    height: 500px;
+
+    /* Box border */
+    border: 5px solid #000;
+    border-radius: 8%;
+
+    /* Center vertically */
+    align-items: center;
+}
+
+.heading {
+    display: flex;
+
+    /* Text */
+    color: #000;
+    font-size: xx-large;
+
+    /* Center horizontally */
+    justify-content: center;
+
+    /* Paddings */
+    padding-top: 40px;
+    padding-bottom: 20px;
+}
+
+.button {
+    padding: 20px;
+}
+
+.btn {
+    font-size: 150%;
+    width: 360px;
+    height: 60px;
+}
