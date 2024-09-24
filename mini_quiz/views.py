@@ -1,3 +1,5 @@
+import datetime
+
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse
 from django.http import (
@@ -37,25 +39,22 @@ def start_quiz(request: HttpRequest, quiz_id: int) -> HttpResponse:
     # get the current time
     time_start = timezone.now()
 
-    # save a relationship object
-    # check whether the attempt already exists
-    attempt = PlayerDoes.objects.filter(username=request.user.id, quiz_id=quiz_id)
-    if (attempt.count() == 0):
-        # create new attempt
-        new_attempt = PlayerDoes(
-            username=request.user,
-            quiz_id=MiniQuiz.objects.get(pk=quiz_id),
-            status=False,
-            start_time=time_start,
-            end_time=None,
-        )
-        new_attempt.save()
-        print("New Attempt created!")
-    else:
-        current_attempt = attempt[0]
-        current_attempt.start_time = time_start
-        current_attempt.save()
-        print("Current Attempt's start time updated!")
+    # get quiz object
+    mn_quiz = MiniQuiz.objects.get(pk=quiz_id)
+    time_limit = mn_quiz.time_limit # in seconds
+
+    # create a new attempt
+    attempts = PlayerDoes.objects.filter(username=request.user.id, quiz_id=quiz_id)
+    new_attempt = PlayerDoes(
+        username=request.user,
+        quiz_id=MiniQuiz.objects.get(pk=quiz_id),
+        attempt_id=attempts.count()+1,
+        status=False,
+        start_time=time_start,
+        end_time=time_start+datetime.timedelta(seconds=time_limit),
+    )
+    new_attempt.save()
+    print("New Attempt created!")
 
     context = {
         "quiz_id": quiz_id,
@@ -71,8 +70,9 @@ def end_quiz(request: HttpRequest, quiz_id: int) -> HttpResponse:
         return render(request, "player/home.html")
 
     # quiz successfully completed
-    attempt = PlayerDoes.objects.get(username=request.user.id, quiz_id=quiz_id)
-    if (attempt):
+    attempts = PlayerDoes.objects.filter(username=request.user.id, quiz_id=quiz_id)
+    last_attempt = attempts[attempts.count() - 1]
+    if (last_attempt.status):
         message = "Successfully Completed Quiz " + str(quiz_id)
     else:
         message = "Failed to Complete Quiz " + str(quiz_id)
@@ -145,12 +145,11 @@ def check_answer(request: HttpRequest, quiz_id: int, question_id: int, answer_id
         # the user has completed the mini-quiz
         if (request.GET['page'] == request.GET['num_pages']):
 
-            # update the end time
-            time_completed = timezone.now()
-            attempt = PlayerDoes.objects.get(username=request.user.id, quiz_id=quiz_id)            
-            attempt.status = True
-            attempt.end_time = time_completed
-            attempt.save()
+            # update the status
+            attempts = PlayerDoes.objects.filter(username=request.user.id, quiz_id=quiz_id)            
+            last_attempt = attempts[attempts.count()-1]
+            last_attempt.status = True
+            last_attempt.save()
             print("Player successfully completes the quiz!")
 
             # update the player's level
