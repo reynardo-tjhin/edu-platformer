@@ -53,7 +53,7 @@ def create_guest_page(request: HttpRequest) -> HttpResponse:
     password = str(uuid.uuid4()) # generate random id as the password
     new_player = Player(
         username=username,
-        current_level=0,
+        current_level=1,
     )
     new_player.set_password(password)
     new_player.save()
