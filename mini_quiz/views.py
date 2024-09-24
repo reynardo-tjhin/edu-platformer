@@ -9,6 +9,7 @@ from django.http import (
 )
 from django.core.paginator import Paginator
 from django.utils import timezone
+from django.core.exceptions import ObjectDoesNotExist
 
 from .models import MiniQuiz, Question, Answer, PlayerAnswers, PlayerDoes
 from player.models import Player
@@ -40,8 +41,11 @@ def start_quiz(request: HttpRequest, quiz_id: int) -> HttpResponse:
     time_start = timezone.now()
 
     # get quiz object
-    mn_quiz = MiniQuiz.objects.get(pk=quiz_id)
-    time_limit = mn_quiz.time_limit # in seconds
+    try:
+        mn_quiz = MiniQuiz.objects.get(pk=quiz_id)
+        time_limit = mn_quiz.time_limit # in seconds
+    except (ObjectDoesNotExist):
+        return render(request, "mini_quiz/to_be_completed.html")
 
     # create a new attempt
     attempts = PlayerDoes.objects.filter(username=request.user.id, quiz_id=quiz_id)
@@ -155,7 +159,7 @@ def check_answer(request: HttpRequest, quiz_id: int, question_id: int, answer_id
             # update the player's level
             player = Player.objects.get(username=request.user.username)
             quiz = MiniQuiz.objects.get(quiz_id=quiz_id)
-            player.current_level = quiz.level
+            player.current_level = quiz.level + 1
             player.save()
             print("Player's level successfully increases!")
 
