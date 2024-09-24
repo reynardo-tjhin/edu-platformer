@@ -9,11 +9,22 @@ from asgiref.sync import sync_to_async
 from datetime import timezone
 
 @sync_to_async
-def get_start_time(user_id: int, quiz_id: int):
+def get_start_time(user_id: int, quiz_id: int) -> datetime.datetime:
     """
-    Get the time based on the username and the quiz
+    Get the start time based on the username and the quiz
     """
-    return PlayerDoes.objects.get(username=user_id, quiz_id=quiz_id).start_time
+    attempts = PlayerDoes.objects.filter(username=user_id, quiz_id=quiz_id)
+    recent_attempt = attempts[attempts.count() - 1]
+    return recent_attempt.start_time
+
+@sync_to_async
+def get_end_time(user_id: int, quiz_id: int) -> datetime.datetime:
+    """
+    Get the designated end time based on the username and the quiz 
+    """
+    attempts = PlayerDoes.objects.filter(username=user_id, quiz_id=quiz_id)
+    recent_attempt = attempts[attempts.count() - 1]
+    return recent_attempt.end_time
 
 
 class TimerConsumer(AsyncWebsocketConsumer):
@@ -34,25 +45,21 @@ class TimerConsumer(AsyncWebsocketConsumer):
         Count down the timer (asynchronously).
         """
         # get the starting time
-        start_time = await get_start_time(user_id, quiz_id)
+        # start_time = await get_start_time(user_id, quiz_id)
+        curr_time = datetime.datetime.now(timezone.utc)
+        end_time = await get_end_time(user_id, quiz_id)
+        time_left = (end_time - curr_time).seconds
 
         # send timer update every second
-        time = 10
-        for _ in range(time): # assuming a 60-second timer currently
+        for t_left in range(time_left + 1, -1, -1): # assuming a 60-second timer currently
 
             # when client sends a 'disconnect' request to the WebSocket
             if (self.stop):
                 break
-        
-            # get the current time
-            curr_time = datetime.datetime.now(timezone.utc)
-
-            # get the time difference in seconds
-            diff = (curr_time - start_time).seconds
 
             # send the text data (the time left) to the client
             await self.send(text_data=json.dumps({
-                'time': time - diff,
+                'time': t_left,
             }))
 
             # sleep for 1 second

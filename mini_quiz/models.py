@@ -12,6 +12,7 @@ class MiniQuiz(models.Model):
     level = models.IntegerField()
     genre = models.CharField(max_length=50) # may be used in the future
     summary = models.CharField(max_length=500) # summarises the learnings of the mini quiz
+    time_limit = models.IntegerField(default=30)
 
     def __str__(self) -> str:
         return f"Mini Quiz Level {self.level}"
@@ -66,10 +67,11 @@ class PlayerDoes(models.Model):
     username = models.ForeignKey(Player, on_delete=models.CASCADE)
     quiz_id = models.ForeignKey(MiniQuiz, on_delete=models.CASCADE)
 
+    attempt_id = models.IntegerField(default=0) # to uniquely identify which attempt
     status = models.BooleanField() # 0 indicates failed, 1 indicates completed
-    start_time = models.DateTimeField()
-    end_time = models.DateTimeField(null=True)
+    start_time = models.DateTimeField() # the time the player clicks on the "start" button
+    end_time = models.DateTimeField(null=True) # the time the player needs to complete
 
 
     def __str__(self) -> str:
-        return f"{self.username} does {self.quiz_id}"
+        return f"[Attempt {self.attempt_id}]: {self.username} does {self.quiz_id}"
