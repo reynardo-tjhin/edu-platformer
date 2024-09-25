@@ -51,7 +51,7 @@ body::before {
 
     /* If you want the divs to be stacked vertically instead of horizontally, you can change the flex-direction to column. */
     flex-direction: column;
-    background-color: #d3d7f8;
+    background-color: rgba(255, 255, 255, 0.50); /* Slightly transparent background */
     
     /* Box width */
     width: 800px;
@@ -61,7 +61,8 @@ body::before {
 
     /* Box border */
     border: 5px solid #000;
-    border-radius: 8%;
+    border-radius: 20px; /* Softer corners */
+    padding: 30px; /* More space inside the box */
 
     /* Center vertically */
     align-items: center;
@@ -71,8 +72,9 @@ body::before {
     display: flex;
 
     /* Text */
-    color: #000;
-    font-size: xx-large;
+    color: #222; /* darker color for better contrast */
+    font-size: 2rem;
+    font-weight: bold;
 
     /* Center horizontally */
     justify-content: center;

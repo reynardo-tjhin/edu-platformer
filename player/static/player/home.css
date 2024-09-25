@@ -11,6 +11,7 @@ body {
     overflow: hidden;
 
     display: flex;
+    flex-direction: column;
 
     /* Center horizontally */
     justify-content: center;
@@ -30,7 +31,7 @@ body::before {
     left: 0;
     height: 100%;
     width: 100%;
-    background: url("/static/player/images/background.jpg");
+    background: url("/static/player/images/snowy-background.jpg");
     
     /* Stretches the background image to cover 100% of both the width and height of the body. This makes the image fill the entire screen. */
     background-size: 100% 100%;
@@ -45,34 +46,13 @@ body::before {
     z-index: -1;  
 }
 
-.box {
-    /* When you set display: flex; on the <body> (or any other container element), the direct child elements (such as <div> tags) will by default be placed horizontally, one next to the other. This happens because the default value for the flex-direction property is row. */
-    display: flex;
-
-    /* If you want the divs to be stacked vertically instead of horizontally, you can change the flex-direction to column. */
-    flex-direction: column;
-    background-color: #d3d7f8;
-    
-    /* Box width */
-    width: 800px;
-
-    /* Box height */
-    height: 500px;
-
-    /* Box border */
-    border: 5px solid #000;
-    border-radius: 8%;
-
-    /* Center vertically */
-    align-items: center;
-}
-
 .heading {
     display: flex;
 
     /* Text */
-    color: #000;
-    font-size: xx-large;
+    color: #222; /* darker color for better contrast */
+    font-size: 3.6rem;
+    font-weight: bold;
 
     /* Center horizontally */
     justify-content: center;
@@ -82,12 +62,124 @@ body::before {
     padding-bottom: 20px;
 }
 
-.button {
-    padding: 20px;
+.box {
+    /* When you set display: flex; on the <body> (or any other container element), the direct child elements (such as <div> tags) will by default be placed horizontally, one next to the other. This happens because the default value for the flex-direction property is row. */
+    display: flex;
+
+    /* If you want the divs to be stacked vertically instead of horizontally, you can change the flex-direction to column. */
+    flex-direction: row;
+    
+    /* Box width */
+    width: 1020px;
+
+    /* Box height */
+    height: 540px;
+
+    /* Box border */
+    /* border: 5px solid #000; */
+    /* border-radius: 20px; Softer corners */
+    /* padding: 30px; More space inside the box */
+
+    /* Center vertically */
+    align-items: center;
 }
 
-.btn {
-    font-size: 150%;
-    width: 360px;
-    height: 60px;
+.button {
+    margin: 20px;
+    border-radius: 40px;
+}
+
+.sign-in {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 300px;
+    height: 500px;
+    background-color: rgba(230, 212, 248, 0.6);
+}
+.sign-in-title {
+    font-size: 1.9rem;
+    padding: 40px;
+    font-weight: bold;
+    color: white;
+    /* text-shadow: 0px 0px 8px purple; */
+}
+.form-signin {
+    width: 260px;
+}
+.form-floating {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+.form-control {
+    border-radius: 30px;
+}
+.login-button {
+    background-color: rgb(200, 162, 200);
+    border-radius: 30px;
+    color: white;
+    height: 50px;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+.login-button:hover {
+    background-color: pink;
+}
+
+.play-as-guest {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 300px;
+    height: 500px;
+    background-color: rgba(212, 230, 248, 0.6);
+}
+.play-as-guest-title {
+    font-size: 1.9rem;
+    padding: 40px;
+    font-weight: bold;
+    color: white;
+    /* text-shadow: 0px 0px 8px purple; */
+    margin-top: 80px;
+}
+.play-as-guest-button-container {
+    width: 260px;
+}
+.play-as-guest-button {
+    background-color: rgb(162, 213, 242);
+    border-radius: 30px;
+    color: white;
+    height: 50px;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+.play-as-guest-button:hover {
+    background-color: aqua;
+}
+
+.create-account {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 300px;
+    height: 500px;
+    background-color: rgba(212, 223, 230, 0.6);
+}
+.create-account-title {
+    font-size: 1.9rem;
+    padding: 40px;
+    font-weight: bold;
+    color: white;
+    /* text-shadow: 0px 0px 8px purple; */
+}
+.create-account-button {
+    background-color: rgb(211, 211, 211);
+    border-radius: 30px;
+    color: white;
+    height: 50px;
+    font-weight: bold;
+    font-size: 1.2rem;
+}
+.create-account-button:hover {
+    background-color: grey;
 }

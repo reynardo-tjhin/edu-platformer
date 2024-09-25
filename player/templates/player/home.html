@@ -12,32 +12,71 @@
     <link rel="stylesheet" href="{% static 'player/home.css' %}">
 </head>
 <body>
+    <!-- heading/title -->
+    <div class="heading">
+        <p>Welcome to our Educational Platformer Game!</p>
+    </div>
+
     <div class="box">
-        <!-- heading/title -->
-        <div class="heading">
-            <p>Welcome to our Educational Platformer Game!</p>
+        <!-- log in to dashboard page -->
+        <div class="button sign-in">
+            <div class="sign-in-title">Log In</div>
+            <!-- the login form -->
+            <div class="form-signin">
+                <form action="{% url 'player:check-account' %}" method="post">
+                    {% csrf_token %}
+                
+                    <div class="form-floating">
+                        <input type="name" name="name" class="form-control" id="floatingInput" placeholder="Name">
+                        <label for="floatingInput">Name</label>
+                    </div>
+                    <div class="form-floating">
+                        <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password">
+                        <label for="floatingPassword">Password</label>
+                    </div>
+
+                    <button class="login-button btn w-100 py-2" type="submit">Log in</button>
+                </form>
+
+                {% if login_error_message %}<p style="color: red;"><strong>Error: {{ login_error_message }}</strong></p>{% endif %}
+            </div>
         </div>
 
-        <!-- sign in/create/play as guest -->
-        <div class="sign-in">
-            <!-- dashboard page -->
-            <div class="button sign-in">
-                <a href="{% url 'player:login' %}">
-                    <button class="btn btn-dark .btn-large">Log In</button>
-                </a>
-            </div>
-
-            <div class="button play-as-guest">
+        <!-- play as guest; redirected to dashboard page -->
+        <div class="button play-as-guest">
+            <div class="play-as-guest-title">Play as<br>A Guest</div>
+            <div class="play-as-guest-button-container">
                 <a href="{% url 'player:create-guest' %}">
-                    <button class="btn btn-dark .btn-large">Play as Guest</button>
+                    <button class="play-as-guest-button btn w-100 py-2">Play as Guest</button>
                 </a>
             </div>
+        </div>
 
-            <!-- create account page -->
-            <div class="button create-account">
-                <a href="{% url 'player:create-account' %}">
-                    <button class="btn btn-dark .btn-large">Create Account</button>
-                </a>
+        <!-- create account page -->
+        <div class="button create-account">
+            <div class="create-account-title">Create Account</div>
+
+            <!-- create new account form -->
+            <div class="form-signin">
+                <form action="{% url 'player:check-new-account' %}" method="post">
+                    {% csrf_token %}
+
+                    <div class="form-floating">
+                        <input type="name" name="name" class="form-control" id="floatingInput" placeholder="Name">
+                        <label for="floatingInput">Name</label>
+                    </div>
+                    <div class="form-floating">
+                        <input type="password" name="password" class="form-control" id="floatingPassword" placeholder="Password">
+                        <label for="floatingPassword">Password</label>
+                    </div>
+                    <div class="form-floating">
+                        <input type="password" name="password2" class="form-control" id="floatingPassword2" placeholder="Re-Enter Password Again">
+                        <label for="floatingPassword2">Re-Enter Password Again</label>
+                    </div>
+                    <button class="create-account-button btn w-100 py-2" type="submit">Create</button>
+                </form>
+
+                {% if create_account_error_message %}<p style="color: red;"><strong>Error: {{ create_account_error_message }}</strong></p>{% endif %}
             </div>
         </div>
     </div>
