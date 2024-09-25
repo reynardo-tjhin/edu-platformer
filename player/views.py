@@ -100,9 +100,9 @@ def check_account(request: HttpRequest) -> HttpResponse:
     # invalid password or name
     if (user == None):
         context = {
-            "error_message": "Your password or name is invalid.",
+            "login_error_message": "Your password or name is invalid.",
         }
-        return render(request, "player/login.html", context)
+        return render(request, "player/home.html", context)
     # login
     login(
         request=request,
@@ -121,25 +121,25 @@ def create_account(request: HttpRequest) -> HttpResponse:
     if player:
         print("Error: player's name already exist!")
         context = {
-            "error_message": "This player's name has been taken T^T",
+            "create_account_error_message": "This player's name has been taken T^T",
         }
-        return render(request, "player/create_account.html", context)
+        return render(request, "player/home.html", context)
 
     # case 2: check if password is empty
     if (request.POST.get("password") == "" or request.POST.get("password2") == ""): 
         print("Error: passwords empty!")
         context = {
-            "error_message": "Please input some passwords *shy*",
+            "create_account_error_message": "Please input some passwords *shy*",
         }
-        return render(request, "player/create_account.html", context)
+        return render(request, "player/home.html", context)
 
     # case 3: check if passwords match
     if (not (request.POST.get("password") == request.POST.get("password2"))):
         print("Error: passwords differ!")
         context = {
-            "error_message": "Passwords differ...",
+            "create_account_error_message": "Passwords differ...",
         }
-        return render(request, "player/create_account.html", context)
+        return render(request, "player/home.html", context)
     
     # create new player object
     current_level = 0
