@@ -12,38 +12,36 @@
     <link rel="stylesheet" href="{% static 'player/dashboard.css' %}">
 </head>
 <body>
+    <!-- heading (welcoming) -->
+    <div class="heading">
+        <p>Welcome, {{ name }}!</p>
+    </div>
+
+    <!-- the main contents -->
     <div class="box">
-        <!-- the player's name -->
-        <div class="heading">
-            <p>Welcome, {{ name }}!</p>
+        <!-- go to the platformer game (continue from last time) -->
+        <div class="platformer-game">
+            <div class="platformer-game-icon"></div>
+            <div class="platformer-game-title">Go to Platformer Game!</div>
         </div>
-    
-        <div class="options">
-            <!-- temporarily goes to the game -->
-            <div class="button platformer-game">
-                <a href="{% url 'platformer:index' %}">
-                    <button class="btn btn-dark .btn-large">Go to Platformer Game!</button>
-                </a>
-            </div>
-    
-            <!-- temporarily assign to mini-game table of contents -->
-            <div class="button game">
-                <a href="{% url 'mini_quiz:index' %}">
-                    <button class="btn btn-dark .btn-large">Go to Mini-Quiz!</button>
-                </a>
-            </div>
-    
-            <!-- to display the achievements -->
-            <div class="achievements">
-    
-            </div>
-    
-            <!-- log out -->
-            <div class="button logout">
-                <a href="{% url 'player:logout' %}">
-                    <button class="btn btn-dark .btn-large">Logout</button>
-                </a>
-            </div>
+
+        <!-- temporarily assign to mini-game table of contents -->
+        <div class="button game">
+            <a href="{% url 'mini_quiz:index' %}">
+                <button class="btn btn-dark .btn-large">Go to Mini-Quiz!</button>
+            </a>
+        </div>
+
+        <!-- to display the achievements -->
+        <div class="achievements">
+
+        </div>
+
+        <!-- log out -->
+        <div class="button logout">
+            <a href="{% url 'player:logout' %}">
+                <button class="btn btn-dark .btn-large">Logout</button>
+            </a>
         </div>
     </div>
 </body>
