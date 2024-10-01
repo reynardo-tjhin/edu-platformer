@@ -101,7 +101,7 @@ body::before {
     font-size: 1.9rem;
     padding: 40px;
     font-weight: bold;
-    color: white;
+    color: black;
     /* text-shadow: 0px 0px 8px purple; */
 }
 .form-signin {
@@ -138,7 +138,7 @@ body::before {
     font-size: 1.9rem;
     padding: 40px;
     font-weight: bold;
-    color: white;
+    color: black;
     /* text-shadow: 0px 0px 8px purple; */
     margin-top: 80px;
 }
@@ -169,7 +169,7 @@ body::before {
     font-size: 1.9rem;
     padding: 40px;
     font-weight: bold;
-    color: white;
+    color: black;
     /* text-shadow: 0px 0px 8px purple; */
 }
 .create-account-button {

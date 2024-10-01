@@ -12,39 +12,51 @@
     <link rel="stylesheet" href="{% static 'player/dashboard.css' %}">
 </head>
 <body>
+    <!-- heading (welcoming) -->
+    <div class="heading">
+        <h1>WELCOME,</h1>
+        <h2>{{ name }}!</h2>
+    </div>
+
+    <!-- the main contents -->
     <div class="box">
-        <!-- the player's name -->
-        <div class="heading">
-            <p>Welcome, {{ name }}!</p>
-        </div>
-    
-        <div class="options">
-            <!-- temporarily goes to the game -->
-            <div class="button platformer-game">
+        <!-- go to the platformer game (continue from last time) -->
+        <div class="platformer-game">
+            <div class="platformer-game-icon"></div>
+            <div class="platformer-game-title">
+                <!-- <div class="platformer-game-title-1">PLATFORMER</div>
+                <div class="platformer-game-title-2">GAME!</div> -->
+                PLATFORMER GAME!
+            </div>
+            <div class="platformer-play-button">
                 <a href="{% url 'platformer:index' %}">
-                    <button class="btn btn-dark .btn-large">Go to Platformer Game!</button>
-                </a>
-            </div>
-    
-            <!-- temporarily assign to mini-game table of contents -->
-            <div class="button game">
-                <a href="{% url 'mini_quiz:index' %}">
-                    <button class="btn btn-dark .btn-large">Go to Mini-Quiz!</button>
-                </a>
-            </div>
-    
-            <!-- to display the achievements -->
-            <div class="achievements">
-    
-            </div>
-    
-            <!-- log out -->
-            <div class="button logout">
-                <a href="{% url 'player:logout' %}">
-                    <button class="btn btn-dark .btn-large">Logout</button>
+                    <button class="btn">PLAY!</button>
                 </a>
             </div>
         </div>
+
+        <!-- to display the achievements -->
+        <div class="achievements">
+            <div class="achievements-icon"></div>
+            <div class="achievements-title">ACHIEVEMENTS!</div>
+        </div>
+
+        <!-- temporarily assign to mini-game table of contents -->
+        <div class="past-mini-quiz">
+            <div class="past-mini-quiz-icon"></div>
+            <div class="past-mini-quiz-title">Past Mini Quizzes!</div>
+            
+            <!-- <a href="{% url 'mini_quiz:index' %}">
+                <button class="btn btn-dark .btn-large">Go to Mini-Quiz!</button>
+            </a> -->
+        </div>
+    </div>
+
+    <!-- log out -->
+    <div class="button logout">
+        <a href="{% url 'player:logout' %}">
+            <button class="btn btn-dark .btn-large">Logout</button>
+        </a>
     </div>
 </body>
 </html>

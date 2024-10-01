@@ -11,9 +11,10 @@ body {
     overflow: hidden;
 
     display: flex;
+    flex-direction: column;
 
     /* Center horizontally */
-    justify-content: center;
+    /* justify-content: center; */
 
     /* Center vertically */
     align-items: center;
@@ -30,7 +31,7 @@ body::before {
     left: 0;
     height: 100%;
     width: 100%;
-    background: url("/static/player/images/background.jpg");
+    background: url("/static/player/images/dark-cave-background.jpg");
     
     /* Stretches the background image to cover 100% of both the width and height of the body. This makes the image fill the entire screen. */
     background-size: 100% 100%;
@@ -39,10 +40,39 @@ body::before {
     background-repeat: no-repeat;
 
     /* Change this value to adjust the opacity */
-    opacity: 0.5; 
+    opacity: 0.65; 
 
     /* Ensure it's behind the content */
     z-index: -1;  
+}
+
+.heading {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    /* Paddings */
+    padding-top: 60px;
+}
+.heading h1 {
+    /* Text */
+    color: #222; /* darker color for better contrast */
+    font-size: 3.5rem;
+    font-weight: bold;
+
+    /* Center horizontally */
+    justify-content: center;
+}
+.heading h2 {
+    color: #222; /* darker color for better contrast */
+    font-size: 5rem;
+    font-weight: bold;
+
+    /* Center horizontally */
+    justify-content: center;
+
+    /* Paddings */
+    padding-bottom: 40px;
 }
 
 .box {
@@ -50,46 +80,114 @@ body::before {
     display: flex;
 
     /* If you want the divs to be stacked vertically instead of horizontally, you can change the flex-direction to column. */
-    flex-direction: column;
-    background-color: rgba(255, 255, 255, 0.50); /* Slightly transparent background */
+    flex-direction: row;
+    /* background-color: rgba(255, 255, 255, 0.50); Slightly transparent background */
     
     /* Box width */
-    width: 800px;
+    width: 1300px;
 
     /* Box height */
     height: 500px;
 
     /* Box border */
-    border: 5px solid #000;
-    border-radius: 20px; /* Softer corners */
-    padding: 30px; /* More space inside the box */
+    /* border: 2px solid #000; */
+    /* border-radius: 20px; Softer corners */
+    /* padding: 30px; More space inside the box */
 
     /* Center vertically */
+    /* align-items: center; */
+}
+
+.platformer-game {
+    width: 400px;
+    height: 500px;
+    /* background-color: rgba(63,56,81,255); */
+    margin-right: 50px;
+    display: flex;
+    flex-direction: column;
     align-items: center;
 }
-
-.heading {
+.platformer-game-icon {
+    width: 280px;
+    height: 280px;
+    margin-top: 20px;
+    border-radius: 100%;
+    background: rgba(63,56,81,255);
+    background-image: url("/static/player/images/platformer-background.png");
+    background-size: 70% 70%;
+    background-repeat: no-repeat;
+    background-position: center;
+    /* border: 6px solid #fff; */
+}
+.platformer-game-title {
+    font-size: 2.5rem;
+    font-weight: bolder;
+    color: white;
+    margin-top: 20px;
     display: flex;
-
-    /* Text */
-    color: #222; /* darker color for better contrast */
-    font-size: 2rem;
-    font-weight: bold;
-
-    /* Center horizontally */
-    justify-content: center;
-
-    /* Paddings */
-    padding-top: 40px;
-    padding-bottom: 20px;
+    flex-direction: row;
+    align-items: center;
 }
-
-.button {
-    padding: 20px;
-}
-
-.btn {
-    font-size: 150%;
-    width: 360px;
+.platformer-play-button button {
+    margin-top: 20px;
+    width: 250px;
     height: 60px;
+    font-size: 1.5rem;
+    font-weight: bolder;
+    color: rgba(63,56,81,255);
+    background: burlywood;
+}
+.platformer-play-button button:hover {
+    color: white;
+    background: chocolate;
+}
+
+.achievements {
+    width: 400px;
+    height: 500px;
+    /* background-color: rgba(212, 230, 248, 0.6); */
+    margin-right: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.achievements-icon {
+    width: 280px;
+    height: 280px;
+    margin-top: 20px;
+    border-radius: 100%;
+    background: rgb(212, 230, 248);
+    background-image: url("/static/player/images/golden-trophy.png");
+    background-size: 70% 70%;
+    background-repeat: no-repeat;
+    background-position: center;
+    /* border: 5px solid #fff; */
+}
+.achievements-title {
+    font-size: 2.5rem;
+    font-weight: bolder;
+    color: white;
+    margin-top: 20px;
+}
+
+.past-mini-quiz {
+    width: 400px;
+    height: 500px;
+    /* background-color: rgba(212, 223, 230, 0.6); */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.past-mini-quiz-icon {
+    width: 280px;
+    height: 280px;
+    margin-top: 20px;
+    border-radius: 100%;
+    background-image: url("/static/player/images/mini-quiz-icon.png");
+    background-size: 100% 100%;
+}.past-mini-quiz-title {
+    font-size: 2.5rem;
+    font-weight: bolder;
+    color: white;
+    margin-top: 20px;
 }
