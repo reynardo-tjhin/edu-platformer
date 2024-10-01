@@ -14,7 +14,8 @@
 <body>
     <!-- heading (welcoming) -->
     <div class="heading">
-        <p>Welcome, {{ name }}!</p>
+        <h1>WELCOME,</h1>
+        <h2>{{ name }}!</h2>
     </div>
 
     <!-- the main contents -->
@@ -22,16 +23,28 @@
         <!-- go to the platformer game (continue from last time) -->
         <div class="platformer-game">
             <div class="platformer-game-icon"></div>
-            <div class="platformer-game-title">Go to Platformer Game!</div>
+            <div class="platformer-game-title">
+                <!-- <div class="platformer-game-title-1">PLATFORMER</div>
+                <div class="platformer-game-title-2">GAME!</div> -->
+                PLATFORMER GAME!
+            </div>
+            <div class="platformer-play-button">
+                <a href="{% url 'platformer:index' %}">
+                    <button class="btn">PLAY!</button>
+                </a>
+            </div>
         </div>
 
         <!-- to display the achievements -->
         <div class="achievements">
-
+            <div class="achievements-icon"></div>
+            <div class="achievements-title">ACHIEVEMENTS!</div>
         </div>
 
         <!-- temporarily assign to mini-game table of contents -->
         <div class="past-mini-quiz">
+            <div class="past-mini-quiz-icon"></div>
+            <div class="past-mini-quiz-title">Past Mini Quizzes!</div>
             
             <!-- <a href="{% url 'mini_quiz:index' %}">
                 <button class="btn btn-dark .btn-large">Go to Mini-Quiz!</button>
