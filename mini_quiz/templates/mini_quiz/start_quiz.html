@@ -6,14 +6,39 @@
     <title>Start Quiz Page</title>
 
     {% load static %}
-    <link rel="stylesheet" href="{% static 'mini_quiz/style.css' %}">
+    <link rel="stylesheet" href="{% static 'mini_quiz/start_quiz.css' %}">
 </head>
 <body>
+    <!-- title -->
+    <div class="title">
+        <h1>Welcome to Mini Quiz {{ quiz_id }}!</h1>
+    </div>
+
     <!-- create a button for players to start the quiz -->
-    <div class="start-quiz-button">
-        <a href="{% url 'mini_quiz:quiz' quiz_id %}">
-            <button style="width: 10rem;">START MINI QUIZ</button>
-        </a>
+    <div class="start-quiz">
+
+        <!-- instructions -->
+        <p>
+            Before you press the START button:
+            Note that this quiz has a time limit!
+            So answer FAST!
+        </p>
+        <p>
+            Not Ready Yet? Press the BACK button!
+        </p>
+
+        <!-- buttons -->
+        <div class="start-quiz-button">
+            <a href="{% url 'mini_quiz:quiz' quiz_id %}">
+                <button class="btn">START MINI QUIZ</button>
+            </a>
+        </div>
+        
+        <div class="back-button">
+            <a href="{% url 'platformer:index' %}">
+                <button class="btn">< BACK</button>
+            </a>
+        </div>
     </div>
 </body>
 </html>
