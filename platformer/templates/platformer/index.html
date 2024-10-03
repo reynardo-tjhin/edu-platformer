@@ -5,17 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Platformer!</title>
 
-    <style>
-        body {
-            background: black;
-        }
-    </style>
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'platformer/index.css' %}">
 </head>
 <body>
-    <div id="temporary-navigation">
-        <a href="{% url 'player:home' %}" style="color: white;">Homepage</a>
+    <div class="navigation">
+        <a href="{% url 'player:home' %}" style="color: white;">
+            <button class="btn">< Back to Home</button>
+        </a>
     </div>
     
+    <!-- the platfomer game is placed here -->
     <canvas></canvas>
 
     <!-- get some info from database, particularly the user's current level -->
