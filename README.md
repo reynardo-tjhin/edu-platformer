@@ -6,7 +6,8 @@
 
 ## Sample
 
-[To be filled with pictures]
+Player can login, play as a guest or create an account to store his/her progress.
+[Login Page](./imgs/Login%20Page%20(Low%20Quality).jpg)
 
 ## Requirements
 
