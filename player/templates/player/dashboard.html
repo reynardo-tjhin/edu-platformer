@@ -14,8 +14,21 @@
 <body>
     <!-- heading (welcoming) -->
     <div class="heading">
-        <h1>WELCOME,</h1>
-        <h2>{{ name }}!</h2>
+        <!-- do nothing -->
+        <div class="nothing"></div>
+        
+        <!-- heading title -->
+        <div class="heading-title">
+            <h1>WELCOME,</h1>
+            <h2>{{ name }}!</h2>
+        </div>
+        
+        <!-- log out -->
+        <div class="button logout">
+            <a href="{% url 'player:logout' %}">
+                <button class="btn btn-dark .btn-large">Logout</button>
+            </a>
+        </div>
     </div>
 
     <!-- the main contents -->
@@ -39,24 +52,23 @@
         <div class="achievements">
             <div class="achievements-icon"></div>
             <div class="achievements-title">ACHIEVEMENTS!</div>
+            <div class="achievements-button">
+                <a href="#">
+                    <button class="btn">ACHIEVEMENTS!</button>
+                </a>
+            </div>
         </div>
 
         <!-- temporarily assign to mini-game table of contents -->
         <div class="past-mini-quiz">
             <div class="past-mini-quiz-icon"></div>
             <div class="past-mini-quiz-title">Past Mini Quizzes!</div>
-            
-            <!-- <a href="{% url 'mini_quiz:index' %}">
-                <button class="btn btn-dark .btn-large">Go to Mini-Quiz!</button>
-            </a> -->
+            <div class="past-mini-quiz-button">
+                <a href="{% url 'mini_quiz:index' %}">
+                    <button class="btn btn-dark .btn-large">TRAVEL BACK!</button>
+                </a>
+            </div>
         </div>
-    </div>
-
-    <!-- log out -->
-    <div class="button logout">
-        <a href="{% url 'player:logout' %}">
-            <button class="btn btn-dark .btn-large">Logout</button>
-        </a>
     </div>
 </body>
 </html>
