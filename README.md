@@ -4,11 +4,6 @@
 
 [To be filled]
 
-## Sample
-
-Player can login, play as a guest or create an account to store his/her progress.
-![Login Page](./imgs/Login%20Page%20(Low%20Quality).jpg)
-
 ## Requirements
 
 Please download all the required libraries/packages in the requirements.txt
@@ -16,6 +11,14 @@ Please download all the required libraries/packages in the requirements.txt
 ```[python3]
 pip install -r requirements.txt
 ```
+
+## How It Looks Like
+
+Player can login, play as a guest or create an account to store his/her progress.
+![Login Page](./imgs/Login%20Page%20(Smaller%20&%20Lower%20Quality).jpg)
+
+Once player has logged in with an account or as a guest, player is directed to his/her dashboard.
+![Dashboard](./imgs/Player's%20Dashboard%20(Smaller%20&%20Lower%20Quality).jpg)
 
 ## TODO List
 
