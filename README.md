@@ -15,10 +15,12 @@ pip install -r requirements.txt
 ## How It Looks Like
 
 Player can login, play as a guest or create an account to store his/her progress.
-![Login Page](./imgs/Login%20Page%20(Smaller%20&%20Lower%20Quality).jpg)
+
+<img src="./imgs/Login%20Page%20(Smaller%20&%20Lower%20Quality).jpg" alt="Login Page" width="450">
 
 Once player has logged in with an account or as a guest, player is directed to his/her dashboard.
-![Dashboard](./imgs/Player's%20Dashboard%20(Smaller%20&%20Lower%20Quality).jpg)
+
+<img src="./imgs/Player's%20Dashboard%20(Smaller%20&%20Lower%20Quality).jpg" alt="Dashboard" width="450">
 
 ## TODO List
 
