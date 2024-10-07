@@ -6,7 +6,7 @@
     <title>Mini Quiz Level {{ level }}</title>    
 
     {% load static %}
-    <link rel="stylesheet" href="{% static 'mini_quiz/style.css' %}">
+    <link rel="stylesheet" href="{% static 'mini_quiz/quiz.css' %}">
 
     <script>
         // function to get the query parameter value by name
@@ -33,11 +33,53 @@
 </head>
 
 <body>
-    <h1>Welcome to Mini Quiz Level {{ level }}</h1>
+    <div class="title">
+        <h1>Mini Quiz Level {{ level }}</h1>
+    </div>
 
     <!-- temporary so that goes back to home page -->
-    <div class="temp">
+    <!-- <div class="temp">
         <a href="{% url 'mini_quiz:index' %}">Home (Mini-Quiz Table of Contents)</a>
+    </div> -->
+
+    <!-- the box that stores the question and answer -->
+    <div class="box">
+
+        <!-- each "question" is a Question model object -->
+        <div class="question">
+
+            <!-- iterate each question and its corresponding answers -->
+            {% for question_and_answers in page_obj %}
+
+                <!-- show the question -->
+                <p>{{ question_and_answers.question.question_text }}</p>
+
+                <!-- show the list of answers -->
+                <div class="answers">
+                    
+                    {% for answer in question_and_answers.answers %}
+                    <div id="answer-{{ answer.answer_id }}" class="answer">
+                        <a href="{% url 'mini_quiz:check-answer' quiz_id question_and_answers.question.question_id answer.answer_id %}?page={{ page_obj.number }}&num_pages={{ page_obj.paginator.num_pages }}">
+                            <button class="btn">
+                                {{ answer.answer_text }}
+                            </button>
+                        </a>
+                    </div>
+                    {% endfor %}
+                </div>
+            
+            {% endfor %}
+        </div>
+
+        <!-- add the timer here -->
+        <div class="timer">
+            <span id="timer"></span>
+        </div>
+    </div>
+
+    <!-- submit button -->
+    <div class="submit">
+        <a id="submit" href="{% url 'mini_quiz:end-quiz' quiz_id %}" style="display: none;">submit</a>
     </div>
 
     <!-- get some info for websocket -->
@@ -45,36 +87,6 @@
         {{ request.user.id|json_script:"user_id" }}
         {{ quiz_id|json_script:"quiz_id" }}
         {{ success|json_script:"success" }}
-    </div>
-
-    <!-- add the timer here -->
-    <div class="timer">
-        You have <span id="timer"></span> seconds left...
-    </div>
-
-    <!-- each "question" is a Question model object -->
-    <div class="question">
-        {% for question_and_answers in page_obj %}
-            <p>{{ forloop.counter }}. {{ question_and_answers.question.question_text }}</p>
-            
-            <!-- show the list of answers -->
-            <div class="answers">
-                {% for answer in question_and_answers.answers %}
-                <div id="answer-{{ answer.answer_id }}" class="answer">
-                    <a href="{% url 'mini_quiz:check-answer' quiz_id question_and_answers.question.question_id answer.answer_id %}?page={{ page_obj.number }}&num_pages={{ page_obj.paginator.num_pages }}">
-                        <button>
-                            {{ answer.answer_text }}
-                        </button>
-                    </a>
-                </div>
-                {% endfor %}
-            </div>
-        {% endfor %}
-    </div>
-
-    <!-- submit button -->
-    <div class="submit">
-        <a id="submit" href="{% url 'mini_quiz:end-quiz' quiz_id %}" style="display: none;">submit</a>
     </div>
 
     <!-- script to include websocket -->

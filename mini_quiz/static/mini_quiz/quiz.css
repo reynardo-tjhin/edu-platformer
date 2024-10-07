@@ -1,0 +1,109 @@
+body {
+    position: relative;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+
+    /* display */
+    display: flex;
+    flex-direction: column;
+    /* align-items: center; */
+
+    /* padding & margin */
+    margin: 0;
+}
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: url("/static/mini_quiz/images/question-mark-island.jpg");
+
+    /* Stretches the background image to cover 100% of both the width and height of the body. This makes the image fill the entire screen. */
+    background-size: 100% 100%;
+
+    /* Ensures that the background image does not repeat itself. */
+    background-repeat: no-repeat;
+
+    /* Change this value to adjust the opacity */
+    /* opacity: 0.2;  */
+
+    /* Ensure it's behind the content */
+    z-index: -1;
+}
+
+.title {
+    /* paddings and margins */
+    padding-top: 180px;
+    margin-left: 900px;
+
+    font-size: 1.5rem;
+    font-weight: bolder;
+}
+
+.box {
+    /* paddings and margins */
+    margin-left: 900px;
+
+    /* display */
+    display: flex;
+    flex-direction: row;
+    /* align-items: center; */
+
+    /* background */
+    background: rgba(255, 255, 255, 1);
+    border-radius: 10px;
+
+    /* size of the div container */
+    height: 360px;
+    width: 500px;
+}
+
+.question {
+    padding-left: 50px;
+    padding-right: 20px;
+    padding-top: 20px;
+
+    /* background: grey; */
+    
+    width: 320px;
+}
+.question p {
+    font-size: 1.5rem;
+}
+.answers button {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    height: 40px;
+    width: 300px;
+    font-size: 1.2rem;
+    border-radius: 10px;
+}
+.highlight button {
+    background-color: red;
+    color: white;
+}
+
+.timer {
+    /* shape */
+    width: 110px;
+    height: 110px;
+    
+    /* background */
+    background: url("/static/mini_quiz/images/alarm.png");
+    background-repeat: no-repeat;
+    background-size: 100% 100%;
+    
+    /* display */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    /* font */
+    font-size: 2rem;
+
+    /* paddings and margins */
+    margin-top: 20px;
+}
