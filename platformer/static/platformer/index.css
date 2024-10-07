@@ -61,4 +61,5 @@ body::before {
 .navigation button:hover {
     background: black;
     color: white;
+    cursor: pointer;
 }

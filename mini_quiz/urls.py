@@ -14,6 +14,9 @@ urlpatterns = [
     # the page where the user finishes the quiz successfully/failed
     path("<int:quiz_id>/end/", views.end_quiz, name="end-quiz"),
 
+    # the page between the START QUIZ information page to the QUIZ page
+    path("<int:quiz_id>/save-start-time", views.redirect_from_start_to_quiz, name="redirect-from-start-to-quiz"),
+
     # the quiz page
     # paginator looks like http://127.0.0.1:8000/mini_quiz/1/?page=2
     path("<int:quiz_id>/", views.quiz, name="quiz"),

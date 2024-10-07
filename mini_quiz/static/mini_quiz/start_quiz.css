@@ -7,7 +7,7 @@ body {
     /* display */
     display: flex;
     flex-direction: column;
-    align-items: center;
+    /* align-items: center; */
 
     /* padding & margin */
     margin: 0;
@@ -19,7 +19,7 @@ body::before {
     left: 0;
     height: 100%;
     width: 100%;
-    background: url("/static/mini_quiz/images/quiz-background.jpg");
+    background: url("/static/mini_quiz/images/question-mark-island.jpg");
 
     /* Stretches the background image to cover 100% of both the width and height of the body. This makes the image fill the entire screen. */
     background-size: 100% 100%;
@@ -28,29 +28,93 @@ body::before {
     background-repeat: no-repeat;
 
     /* Change this value to adjust the opacity */
-    opacity: 0.5; 
+    /* opacity: 0.2;  */
 
     /* Ensure it's behind the content */
     z-index: -1;
 }
 
 .title {
+    /* paddings and margins */
     padding-top: 180px;
+    margin-left: 900px;
+
+    font-size: 1.5rem;
+    font-weight: bolder;
 }
 
 .start-quiz {
+    /* paddings and margins */
+    margin-left: 900px;
+
+    /* display */
     display: flex;
     flex-direction: column;
     align-items: center;
 
-    background: rgba(255, 255, 255, 0.7);
+    /* background */
+    background: rgba(255, 255, 255, 1);
+    border-radius: 10px;
+
+    /* size of the div container */
+    height: 300px;
+    width: 500px;
 }
 .start-quiz p {
-    margin-top: 4px;
-    margin-bottom: 4px;
+    /* paddings and margins */
+    padding-left: 50px;
+
+    /* size */
+    font-size: 2rem;
+    width: 480px;
 }
-.start-quiz button {
-    width: 10rem;
+
+.buttons {
+    /* display */
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+
+    /* paddings and margins */
     margin-top: 4px;
     margin-bottom: 4px;
+
+    /* shape */
+    width: 480px;
+    height: 50px;
+}
+.buttons button {
+    /* paddings and margins */
+    margin-left: 35px;
+    margin-right: 35px;
+
+    /* shape */
+    width: 180px;
+    height: 40px;
+}
+.back-button button {
+    background: #A2C1E5;
+    color: black;
+    border: none;
+    border-radius: 15px;
+
+    font-size: 1.1rem;
+}
+.back-button button:hover {
+    background: #8AA6CF;
+    cursor: pointer;
+    color: white;
+}
+.start-quiz-button button {
+    background: #A2CDAA;
+    color: black;
+    border: none;
+    border-radius: 15px;
+
+    font-size: 1.1rem;
+}
+.start-quiz-button button:hover {
+    background: #8AB78F;
+    cursor: pointer;
+    color: white;
 }

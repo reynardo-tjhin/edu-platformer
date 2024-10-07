@@ -37,29 +37,6 @@ def start_quiz(request: HttpRequest, quiz_id: int) -> HttpResponse:
     if (not request.user.is_authenticated):
         return render(request, "player/home.html")
 
-    # get the current time
-    time_start = timezone.now()
-
-    # get quiz object
-    try:
-        mn_quiz = MiniQuiz.objects.get(pk=quiz_id)
-        time_limit = mn_quiz.time_limit # in seconds
-    except (ObjectDoesNotExist):
-        return render(request, "mini_quiz/to_be_completed.html")
-
-    # create a new attempt
-    attempts = PlayerDoes.objects.filter(username=request.user.id, quiz_id=quiz_id)
-    new_attempt = PlayerDoes(
-        username=request.user,
-        quiz_id=MiniQuiz.objects.get(pk=quiz_id),
-        attempt_id=attempts.count()+1,
-        status=False,
-        start_time=time_start,
-        end_time=time_start+datetime.timedelta(seconds=time_limit),
-    )
-    new_attempt.save()
-    print("New Attempt created!")
-
     context = {
         "quiz_id": quiz_id,
     }
@@ -116,10 +93,39 @@ def quiz(request: HttpRequest, quiz_id: int) -> HttpResponse:
 
 
 
-
 ###################################################################
 ############################# BACKEND #############################
 ###################################################################
+
+def redirect_from_start_to_quiz(request: HttpRequest, quiz_id: int) -> HttpResponse:
+    """
+    When the user presses the 'START QUIZ' button,
+    the server will go to this link to create an attempt (to save the start time)
+    then redirected to the quiz html.
+    """
+    # get the current time
+    time_start = timezone.now()
+
+    # get quiz object
+    try:
+        mn_quiz = MiniQuiz.objects.get(pk=quiz_id)
+        time_limit = mn_quiz.time_limit # in seconds
+    except (ObjectDoesNotExist):
+        return render(request, "mini_quiz/to_be_completed.html")
+
+    # create a new attempt
+    attempts = PlayerDoes.objects.filter(username=request.user.id, quiz_id=quiz_id)
+    new_attempt = PlayerDoes(
+        username=request.user,
+        quiz_id=MiniQuiz.objects.get(pk=quiz_id),
+        attempt_id=attempts.count()+1,
+        status=False,
+        start_time=time_start,
+        end_time=time_start+datetime.timedelta(seconds=time_limit),
+    )
+    new_attempt.save()
+    print("New Attempt created!")
+    return HttpResponseRedirect(reverse("mini_quiz:quiz", args=(quiz_id,)))
 
 def check_answer(request: HttpRequest, quiz_id: int, question_id: int, answer_id: int) -> HttpResponse:
     """

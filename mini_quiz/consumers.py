@@ -42,7 +42,7 @@ class TimerConsumer(AsyncWebsocketConsumer):
 
         # send timer update every second
         # let 2 seconds as the buffer time
-        for t_left in range(time_left + 2, -1, -1):
+        for t_left in range(time_left + 1, -1, -1):
 
             # when client sends a 'disconnect' request to the WebSocket
             if (self.stop):

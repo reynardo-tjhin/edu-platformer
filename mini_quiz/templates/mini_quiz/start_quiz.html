@@ -7,6 +7,11 @@
 
     {% load static %}
     <link rel="stylesheet" href="{% static 'mini_quiz/start_quiz.css' %}">
+
+    <script>
+        /*to prevent Firefox FOUC, this must be here*/
+        let FF_FOUC_FIX;
+    </script>
 </head>
 <body>
     <!-- title -->
@@ -19,25 +24,25 @@
 
         <!-- instructions -->
         <p>
-            Before you press the START button:
-            Note that this quiz has a time limit!
-            So answer FAST!
-        </p>
-        <p>
-            Not Ready Yet? Press the BACK button!
+            This quiz has a time limit! <br>
+            So answer FAST! <br>
+            Not Ready Yet? <br>
+            Press the BACK button!
         </p>
 
         <!-- buttons -->
-        <div class="start-quiz-button">
-            <a href="{% url 'mini_quiz:quiz' quiz_id %}">
-                <button class="btn">START MINI QUIZ</button>
-            </a>
-        </div>
-        
-        <div class="back-button">
-            <a href="{% url 'platformer:index' %}">
-                <button class="btn">< BACK</button>
-            </a>
+        <div class="buttons">
+            <div class="back-button">
+                <a href="{% url 'platformer:index' %}">
+                    <button class="btn">NOT READY 😔</button>
+                </a>
+            </div>
+
+            <div class="start-quiz-button">
+                <a href="{% url 'mini_quiz:redirect-from-start-to-quiz' quiz_id %}">
+                    <button class="btn">LET'S GO!</button>
+                </a>
+            </div>
         </div>
     </div>
 </body>
