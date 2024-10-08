@@ -20,7 +20,7 @@ class QuestionLinkInLine(admin.TabularInline):
 
 class MiniQuizAdmin(admin.ModelAdmin):
     fieldsets = [
-        (None, {"fields": ["quiz_id", "level", "genre", "summary", "time_limit"]}),
+        (None, {"fields": ["quiz_id", "level", "genre", "summary", "time_limit", "title"]}),
     ]
     inlines = [QuestionLinkInLine]
 admin.site.register(MiniQuiz, MiniQuizAdmin)

@@ -81,7 +81,7 @@ body::before {
 }
 .heading-title h2 {
     color: #222; /* darker color for better contrast */
-    font-size: 5rem;
+    font-size: 4.2rem;
     font-weight: bold;
 
     /* Center horizontally */

@@ -23,9 +23,18 @@ def index(request: HttpRequest) -> HttpResponse:
     if (not request.user.is_authenticated):
         return render(request, "player/home.html")
 
+    # get the current level of the player
+    current_level = request.user.current_level
+
+    # get a list of mini quizzes until the (current level - 1)
     list_of_mini_quizzes = MiniQuiz.objects.order_by("level")
+    available_past_quizzes = []
+    for mini_quiz in list_of_mini_quizzes:
+        if (mini_quiz.level <= current_level - 1):
+            available_past_quizzes.append(mini_quiz)
+
     context = {
-        "list_of_mini_quizzes": list_of_mini_quizzes,
+        "list_of_mini_quizzes": available_past_quizzes,
     }
     return render(request, "mini_quiz/index.html", context)
 
@@ -165,7 +174,7 @@ def check_answer(request: HttpRequest, quiz_id: int, question_id: int, answer_id
             # update the player's level
             player = Player.objects.get(username=request.user.username)
             quiz = MiniQuiz.objects.get(quiz_id=quiz_id)
-            player.current_level = quiz.level + 1
+            player.current_level = max(player.current_level, quiz.level + 1)
             player.save()
             print("Player's level successfully increases!")
 

@@ -6,25 +6,59 @@
     <title>Mini Quiz Table of Contents</title>
 
     {% load static %}
-    <link rel="stylesheet" href="{% static 'mini_quiz/style.css' %}">
+    <link rel="stylesheet" href="{% static 'mini_quiz/index.css' %}">
 </head>
 <body>
-    <div class="temp-navigation">
-        <a href="{% url 'player:home' %}">Homepage</a>
-    </div>
-
+    <!-- title for the index -->
     <div class="title">
-        <h1>Welcome to Mini Quiz! Please select a Level!</h1>
+        <h1>Here are the Past Mini Quizzes<br>
+            You've Successfully Cleared!</h1>
     </div>
 
-    <div class="mini-quiz-list">
-        {% if list_of_mini_quizzes %}
-        <ul>
+    <!-- show a list of mini quizzes -->
+    <div class="box">
+
+        <div class="home">
+            <a href="{% url 'player:dashboard' %}"></a>
+        </div>
+
+        <div class="mini-quiz-list">
+            <!-- if list of mini quizzes are available -->
+            {% if list_of_mini_quizzes %}
+
+            <!-- iterate each mini quiz in the list -->
             {% for mn_quiz in list_of_mini_quizzes %}
-                <li><a href="{% url 'mini_quiz:start_quiz' mn_quiz.quiz_id %}">Level {{ mn_quiz.level }}</a>; Summary: {{ mn_quiz.summary }}</li>
+
+                <a href="{% url 'mini_quiz:start_quiz' mn_quiz.quiz_id %}">
+                    <button>
+                        <p>
+                            LEVEL {{ mn_quiz.level }}: {{ mn_quiz.title }}
+                        </p>
+                    </button>
+                </a>
             {% endfor %}
-        </ul>
+
+            <!-- testing for many levels cleared -->
+            <!-- <a href="#"><button><p>BLOCKED! (FOR OVERFLOW)</p></button></a>
+            <a href="#"><button><p>BLOCKED! (FOR OVERFLOW)</p></button></a>
+            <a href="#"><button><p>BLOCKED! (FOR OVERFLOW)</p></button></a>
+            <a href="#"><button><p>BLOCKED! (FOR OVERFLOW)</p></button></a>
+            <a href="#"><button><p>BLOCKED! (FOR OVERFLOW)</p></button></a>
+            <a href="#"><button><p>BLOCKED! (FOR OVERFLOW)</p></button></a>
+            <a href="#"><button><p>BLOCKED! (FOR OVERFLOW)</p></button></a>
+            <a href="#"><button><p>BLOCKED! (FOR OVERFLOW)</p></button></a>
+            <a href="#"><button><p>BLOCKED! (FOR OVERFLOW)</p></button></a>
+            <a href="#"><button><p>BLOCKED! (FOR OVERFLOW)</p></button></a>
+            <a href="#"><button><p>BLOCKED! (FOR OVERFLOW)</p></button></a>
+            <a href="#"><button><p>BLOCKED! (FOR OVERFLOW)</p></button></a>
+            <a href="#"><button><p>BLOCKED! (FOR OVERFLOW)</p></button></a>
+            <a href="#"><button><p>BLOCKED! (FOR OVERFLOW)</p></button></a>
+            <a href="#"><button><p>BLOCKED! (FOR OVERFLOW)</p></button></a> -->
+
+        {% else %}
+            <h1>You have not completed any quizzes yet...</h1>
         {% endif %}
+        </div>
     </div>
 </body>
 </html>

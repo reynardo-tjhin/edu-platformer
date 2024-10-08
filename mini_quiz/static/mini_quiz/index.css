@@ -1,0 +1,106 @@
+body {
+    position: relative;
+    height: 100vh;
+    width: 100vw;
+    overflow: hidden;
+
+    margin: 0px;
+}
+
+body::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background: url("/static/mini_quiz/images/question-mark-island.jpg");
+
+    background-size: 100% 100%;
+
+    background-repeat: no-repeat;
+
+    z-index: -1;
+}
+
+.title {
+    /* paddings and margins */
+    padding-top: 180px;
+    margin-left: 900px;
+
+    font-size: 1.5rem;
+    font-weight: bolder;
+}
+
+.box {
+    /* paddings and margins */
+    margin-left: 900px;
+
+    display: flex;
+    flex-direction: row;
+    /* align-items: center; */
+
+    /* background */
+    background: #A2CDAA;
+    border-radius: 10px;
+
+    /* size of the div container */
+    height: 360px;
+    width: 500px;
+}
+.home {
+    width: 100px;
+    height: 100px;
+
+    background: white;
+    background: url("/static/mini_quiz/images/home-icon.png");
+
+    background-size: 100% 100%;
+}
+.home a {
+    display: block;
+    width: 100%;
+    height: 100%;
+}
+.mini-quiz-list {
+    /* overflow for scrolling */
+    overflow-y: scroll;
+
+    /* display */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    /* shape of the container */
+    width: 400px;
+    height: 360px;
+}
+.mini-quiz-list button {
+    /* paddings and margins */
+    margin-top: 20px;
+    margin-bottom: 10px;
+
+    /* background */
+    background: white;
+
+    /* borders */
+    border: 2px white solid;
+    border-radius: 10px;
+
+    /* shape */
+    height: 50px;
+    width: 360px;
+    
+    /* fonts */
+    font-size: 0.9rem;
+    font-weight: bold;
+}
+.mini-quiz-list button:hover {
+    cursor: pointer;
+    background: darkblue;
+    color: white;
+}
+.mini-quiz-list h1 {
+    font-size: 1.7rem;
+    padding-left: 30px;
+}

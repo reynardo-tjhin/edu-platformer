@@ -9,6 +9,7 @@ class MiniQuiz(models.Model):
     quiz_id = models.IntegerField(primary_key=True)
 
     # the other attributes
+    title = models.CharField(max_length=50)
     level = models.IntegerField()
     genre = models.CharField(max_length=50) # may be used in the future
     summary = models.CharField(max_length=500) # summarises the learnings of the mini quiz

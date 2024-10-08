@@ -24,8 +24,6 @@ Once player has logged in with an account or as a guest, player is directed to h
 
 ## TODO List
 
-- Integrate the platformer game to the mini-quiz
-  - player leveled up and then can go to the next level
 - Improve the designs of the pages
 - Only for admin (or superuser) page
   - /mini-quiz/index: allow only for admins
