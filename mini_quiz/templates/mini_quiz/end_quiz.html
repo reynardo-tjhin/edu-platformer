@@ -4,18 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quiz's Result</title>
+
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'mini_quiz/end_quiz.css' %}">
 </head>
 <body>
-    <div class="message">
-        {{ message }}!!
-    </div>
+    <div class="box">
+        <!-- button to go back to homepage -->
+        <div class="home">
+            <a href="{% url 'player:dashboard' %}"></a>
+        </div>
 
-    <!-- Here should list a summary of the quiz lessons -->
-
-    <div class="buttons">
-        <a href="{% url 'player:dashboard' %}">
-            <button>Back to Homepage</button>
-        </a>
+        <!-- message -->
+        <div class="message">
+            {% if message == "success" %}
+                <div class="success-message">
+                    <div class="happy-emoji"></div>
+                    <p>Successfully Completed Quiz {{ quiz_id }}</p>
+                </div>
+            {% else %}
+                <div class="fail-message">
+                    <div class="sad-emoji"></div>
+                    <p>Failed to Complete Quiz {{ quiz_id }} :(</p>
+                </div>
+            {% endif %}
+        </div>
     </div>
 </body>
 </html>

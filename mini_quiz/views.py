@@ -63,11 +63,11 @@ def end_quiz(request: HttpRequest, quiz_id: int) -> HttpResponse:
     attempts = PlayerDoes.objects.filter(username=request.user.id, quiz_id=quiz_id)
     last_attempt = attempts[attempts.count() - 1]
     if (last_attempt.status):
-        message = "Successfully Completed Quiz " + str(quiz_id)
+        message = "success"
     else:
         message = "Failed to Complete Quiz " + str(quiz_id)
 
-    return render(request, "./mini_quiz/end_quiz.html", {"message": message})
+    return render(request, "./mini_quiz/end_quiz.html", {"message": message, "quiz_id": quiz_id})
 
 def quiz(request: HttpRequest, quiz_id: int) -> HttpResponse:
     """
